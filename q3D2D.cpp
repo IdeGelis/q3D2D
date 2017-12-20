@@ -23,7 +23,7 @@
 #include <QMainWindow>
 
 //3D2D
-#include "q3d2ddlg.h"
+#include "q3D2Ddlg.h"
 
 //Default constructor: should mainly be used to initialize
 //actions (pointers) and other members
@@ -81,9 +81,6 @@ void q3D2D::doAction()
     //q3D2DDlg dlg(m_app->getMainWindow());
     q3D2DDlg dlg;
     dlg.exec();
-
-    //m_app->dispToConsole('t');
-	//ici fair le . show!!
 
 	//put your code here
 	//--> you may want to start by asking parameters (with a custom dialog, etc.)
