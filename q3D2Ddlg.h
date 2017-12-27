@@ -19,8 +19,9 @@ private:
     Ui::q3D2DDlg *ui;
 
 public slots:
-    void loadImgFolder();
-    void loadParamsFolder();
+    //void loadImgFolder();
+    //void loadParamsFolder();
+    void load();
     void reproj();
     void displayImg();
     void selectPt();

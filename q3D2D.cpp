@@ -15,7 +15,7 @@
 //#                                                                        #
 //##########################################################################
 
-#include "q3D2D.h"
+//System
 #include <iostream>
 
 //Qt
@@ -23,6 +23,7 @@
 #include <QMainWindow>
 
 //3D2D
+#include "q3D2D.h"
 #include "q3D2Ddlg.h"
 
 //Default constructor: should mainly be used to initialize
