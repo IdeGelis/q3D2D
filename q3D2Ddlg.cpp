@@ -1,5 +1,6 @@
 //System
 #include <iostream>
+#include <string>
 
 //3D2D
 //#include "ccCalibration.h"
@@ -11,6 +12,7 @@
 //Qt
 #include "qfiledialog.h"
 #include <QString>
+#include <QDir>
 
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
     QDialog(parent),
@@ -37,22 +39,26 @@ void q3D2DDlg::load()
 {
     // Loading of folders containing the images and the XML files of parameters
     std::cout<<"Loading folders containning images and files of parameters..."<<std::endl;
-
+    //QDir::homePath() : In order to be able work on several computer and several environment
     QString dirImg = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
-                                                               "/home",
+                                                               QDir::homePath(),
                                                                QFileDialog::ShowDirsOnly
                                                                | QFileDialog::DontResolveSymlinks);
 
-    // Voir QDir pour remonter d'un dossier
+    // Parameters folder is usually the same as images folder
+    QDir parentDirImg  = QDir(dirImg);
+    parentDirImg.cdUp();
     QString dirParam = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
-                                                         dirImg,
+                                                         parentDirImg.absolutePath(),
                                                          QFileDialog::ShowDirsOnly
                                                          | QFileDialog::DontResolveSymlinks);
 
-    //Creation of the work site
-    ccWorkSite currentWorkSite(dirImg,dirParam);
 
-    std::cout<<"creation current work site ok!"<<std::endl;
+
+    //Creation of the work site
+    //ccWorkSite currentWorkSite(dirImg,dirParam);
+
+    //std::cout<<"creation current work site ok!"<<std::endl;
     //currentWorkSite.initialise();
 
 }

@@ -12,6 +12,10 @@ ccWorkSite::ccWorkSite(QString _pathFolderImg, QString _pathFolderOriCali)
     :pathFolderImg(_pathFolderImg), pathFolderOriCali(_pathFolderOriCali)
 {
 }
+//ccWorkSite::ccWorkSite(std::string _pathFolderImg, std::string _pathFolderOriCali)
+//    :pathFolderImg(_pathFolderImg), pathFolderOriCali(_pathFolderOriCali)
+//{
+//}
 
 ccWorkSite::initialise()
 {

@@ -16,11 +16,15 @@ class ccWorkSite
 {
 public:
     ccWorkSite(QString _pathFolderImg, QString _pathFolderOriCali);
+    //ccWorkSite(std::string _pathFolderImg, std::string _pathFolderOriCali);
     void initialise();
 
 protected:
     QString pathFolderImg;
     QString pathFolderOriCali;
+//    std::string pathFolderImg;
+//    std::string pathFolderOriCali;
+
     //std::vector<cc3D2DImage> images;
 };
 
