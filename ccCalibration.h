@@ -2,15 +2,19 @@
 #define CCCALIBRATION_H
 
 //CCLib
-#include <Matrix.h>
+#include <MatrixXX.h>
 #include <CCGeom.h>
 
 class ccCalibration
 {
 public:
     ccCalibration();
+    void setAngleShot();
+    void setDistoMax();
+    vectorTpl<float> calcDisto(vector2Tpl<float>);
+
 protected:
-    CCLib::MatrixTpl<Scalar> ppa;
+    CCLib::Matrix<> ppa;
     double focale;
     std::vector<double> sizeImg;
     CCLib::MatrixTpl<Scalar> pps;

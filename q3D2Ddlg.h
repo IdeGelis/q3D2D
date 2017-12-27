@@ -17,6 +17,14 @@ public:
 
 private:
     Ui::q3D2DDlg *ui;
+
+public slots:
+    void loadImgFolder();
+    void loadParamsFolder();
+    void reproj();
+    void displayImg();
+    void selectPt();
+
 };
 
 #endif // Q3D2DDLG_H

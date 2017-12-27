@@ -82,8 +82,6 @@ void q3D2D::doAction()
     q3D2DDlg dlg;
     dlg.exec();
 
-	//put your code here
-	//--> you may want to start by asking parameters (with a custom dialog, etc.)
 
 
 	//This is how you can output messages
