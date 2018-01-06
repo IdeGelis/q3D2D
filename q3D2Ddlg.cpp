@@ -56,7 +56,7 @@ void q3D2DDlg::load()
 
 
     //Creation of the work site
-    //ccWorkSite currentWorkSite(dirImg,dirParam);
+    ccWorkSite currentWorkSite(dirImg,dirParam);
 
     //std::cout<<"creation current work site ok!"<<std::endl;
     //currentWorkSite.initialise();
