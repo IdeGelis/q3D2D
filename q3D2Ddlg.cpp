@@ -62,21 +62,6 @@ void q3D2DDlg::load()
 
 }
 
-//void q3D2DDlg::loadImgFolder()
-//{
-//    std::cout<<"Loading the folder containning images..."<<std::endl;
-//    QString folderName = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
-//                                                           "/home",
-//                                                           QFileDialog::ShowDirsOnly
-//                                                           | QFileDialog::DontResolveSymlinks);
-
-
-//}
-
-//void q3D2DDlg::loadParamsFolder()
-//{
-//    std::cout<<"Loading the folder containning parameters files..."<<std::endl;
-//}
 
 void q3D2DDlg::selectPt()
 {

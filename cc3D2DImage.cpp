@@ -10,6 +10,6 @@
 cc3D2DImage::cc3D2DImage(QString _path,QString _name)
     :QImage(_path),name(_name)
 {
-    std::cout<<"Creating cc3D2DImage object"<<std::endl;
+   // std::cout<<"Creating cc3D2DImage object"<<std::endl;
 }
 

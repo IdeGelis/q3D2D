@@ -14,13 +14,14 @@
 
 //3D2D
 //#include "ccCalibration.h"
-//#include "ccOrientation.h"
+#include "ccOrientation.h"
 
 
 class cc3D2DImage : public QImage
 {
 public:
     cc3D2DImage(QString _path, QString _name);
+
 //    void setVectVisee();
 //    Vector2Tpl<float> addDisto(Vector2Tpl<float>);
 //    Vector2Tpl<float> formuleImg(Vecto2Tpl<float>);
