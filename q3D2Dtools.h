@@ -5,9 +5,9 @@
 #include "ccOrientation.h"
 
 //Qt
-#include <QDir>
+#include <QString>
 
-ccOrientation xmlToOri(QDir filePath);
+ccOrientation xmlToOri(QString filePath);
 
 #endif // Q3D2DTOOLS
 

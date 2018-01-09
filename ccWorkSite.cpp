@@ -52,23 +52,18 @@ void ccWorkSite::initialise()
         QString pathImg = pathFolderImg + "/" + imgName;
 
         //Creation of the ccOrientation object
-        ccOrientation ori = xmlToOri(QDir(oriFiles.at(i)));
+        ccOrientation ori = xmlToOri(pathFolderOriCali + "/" + oriFiles.at(i));
 
         // Creation of the cc3D2DImage object
         cc3D2DImage img(pathImg,imgName);
 
         images.push_back(img);
 
-        //QImage Img = QImage(pathImg);
-
-        //std::cout<<pathImg.toStdString()<<std::endl;
-
-       // QXmlStreamReader oriFile = QXmlStreamReader(oriFiles.at(i));cc
     }
 
 //    for(int unsigned i=0;i<images.size();i++){
 //        std::cout<< images[i].name.toStdString()<<std::endl;
 //    }
-    //https://stackoverflow.com/questions/3092387/parse-a-xml-file-in-qt
+
 
 }
