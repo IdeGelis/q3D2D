@@ -8,8 +8,7 @@
 #include <QString>
 #include <QFile>
 #include <QXmlStreamReader>
-#include <QDebug>
-#include <QStringRef>
+#include <QMessageBox>
 
 ccOrientation xmlToOri(QString filePath)
 {
@@ -28,10 +27,11 @@ ccOrientation xmlToOri(QString filePath)
     QXmlStreamReader reader(&file);
 
     //Element to import
-    QString calibPath;
-    QString l1;
-    QString l2;
-    QString l3;
+    QString calibPath = QString("test");
+    QString centre = QString("test");
+    QString l1 = QString("test");
+    QString l2 = QString("test");
+    QString l3 = QString("test");
 
 
     if (reader.readNextStartElement()) {
@@ -48,7 +48,10 @@ ccOrientation xmlToOri(QString filePath)
 
                         else if(reader.name() == "Externe"){
                             while(reader.readNextStartElement()){
-                                if(reader.name() == "ParamRotation"){
+                                if(reader.name() == "Centre"){
+                                    centre = reader.readElementText();
+                                }
+                                else if(reader.name() == "ParamRotation"){
                                     while(reader.readNextStartElement()){
                                         if(reader.name() == "CodageMatr"){
                                             while(reader.readNextStartElement()){
@@ -86,9 +89,14 @@ ccOrientation xmlToOri(QString filePath)
     }
     file.close();
 
-
-    std::cout<<calibPath.toStdString()<<std::endl;
-    std::cout<<l1.toStdString()<<std::endl;
-    std::cout<<l2.toStdString()<<std::endl;
-    std::cout<<l3.toStdString()<<std::endl;
+    if (calibPath == "test" || centre == "test" || l1 == "test" || l2 == "test" || l3 == "test"){
+        std::cout << "File not conform!" << std::endl;
+        QMessageBox msgBox;
+        msgBox.setText("Orientation file" + filePath +" not conform");
+        msgBox.exec();
+    }
+//    std::cout<<calibPath.toStdString()<<std::endl;
+//    std::cout<<l1.toStdString()<<std::endl;
+//    std::cout<<l2.toStdString()<<std::endl;
+//    std::cout<<l3.toStdString()<<std::endl;
 }
