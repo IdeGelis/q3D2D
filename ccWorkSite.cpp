@@ -48,6 +48,7 @@ void ccWorkSite::initialise()
 
         QString pathImg = pathFolderImg + "/" + imgName;
 
+        cc3D2DImage img(pathImg,imgName);
 
         //QImage Img = QImage(pathImg);
 

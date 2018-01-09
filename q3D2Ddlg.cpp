@@ -47,8 +47,6 @@ void q3D2DDlg::load()
                                                                | QFileDialog::DontResolveSymlinks);
 
     // Parameters folder is usually the same as images folder
-//    QDir DirImg  = QDir(dirImgStr);
-//    parentDirImg.cdUp();
     QString dirParamStr = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
                                                          QDir(dirImgStr).absolutePath(),
                                                          QFileDialog::ShowDirsOnly
@@ -58,7 +56,6 @@ void q3D2DDlg::load()
 
     //Creation of the work site
     ccWorkSite currentWorkSite(dirImgStr,dirParamStr);
-
     std::cout<<"creation current work site ok!"<<std::endl;
     currentWorkSite.initialise();
 

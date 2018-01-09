@@ -22,9 +22,6 @@ public:
 protected:
     QString pathFolderImg;
     QString pathFolderOriCali;
-//    std::string pathFolderImg;
-//    std::string pathFolderOriCali;
-
     //std::vector<cc3D2DImage> images;
 };
 
