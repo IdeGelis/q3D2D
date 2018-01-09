@@ -13,6 +13,7 @@
 #include "qfiledialog.h"
 #include <QString>
 #include <QDir>
+#include <QXmlStreamReader>
 
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
     QDialog(parent),
@@ -40,26 +41,27 @@ void q3D2DDlg::load()
     // Loading of folders containing the images and the XML files of parameters
     std::cout<<"Loading folders containning images and files of parameters..."<<std::endl;
     //QDir::homePath() : In order to be able work on several computer and several environment
-    QString dirImg = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
+    QString dirImgStr = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
                                                                QDir::homePath(),
                                                                QFileDialog::ShowDirsOnly
                                                                | QFileDialog::DontResolveSymlinks);
 
     // Parameters folder is usually the same as images folder
-    QDir parentDirImg  = QDir(dirImg);
-    parentDirImg.cdUp();
-    QString dirParam = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
-                                                         parentDirImg.absolutePath(),
+//    QDir DirImg  = QDir(dirImgStr);
+//    parentDirImg.cdUp();
+    QString dirParamStr = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
+                                                         QDir(dirImgStr).absolutePath(),
                                                          QFileDialog::ShowDirsOnly
                                                          | QFileDialog::DontResolveSymlinks);
 
 
 
     //Creation of the work site
-    ccWorkSite currentWorkSite(dirImg,dirParam);
+    ccWorkSite currentWorkSite(dirImgStr,dirParamStr);
 
-    //std::cout<<"creation current work site ok!"<<std::endl;
-    //currentWorkSite.initialise();
+    std::cout<<"creation current work site ok!"<<std::endl;
+    currentWorkSite.initialise();
+
 
 }
 
