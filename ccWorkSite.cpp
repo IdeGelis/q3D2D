@@ -54,8 +54,14 @@ void ccWorkSite::initialise()
         //Creation of the ccOrientation object
         ccOrientation ori = xmlToOri(pathFolderOriCali + "/" + oriFiles.at(i));
 
+        QStringList pathCal = ori.pathCali.split('/');
+        QString caliFile = pathCal.at(pathCal.size()-1);
+
+        ccCalibration cali = xmlToCali(pathFolderOriCali + "/" + caliFile);
+
+
         // Creation of the cc3D2DImage object
-        cc3D2DImage img(pathImg,imgName);
+        cc3D2DImage img(pathImg,imgName,ori);
 
         images.push_back(img);
 

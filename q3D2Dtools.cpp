@@ -100,7 +100,7 @@ ccOrientation xmlToOri(QString filePath)
         QMessageBox msgBox;
         msgBox.setText("Orientation file" + filePath +" not conform");
         msgBox.exec();
-        return;
+
     }
 
 
@@ -150,28 +150,26 @@ ccCalibration xmlToCali(QString filePath)
     QString focale = QString("test");
     QString pps = QString("test");
     QString sizeImg = QString("test");
-    QString distorsionCoefs = QString("test");
-
+    QString distorsionCoefs1 = QString("test");
+    QString distorsionCoefs2;
+    QString distorsionCoefs3;
 
     if (reader.readNextStartElement()) {
 
         if (reader.name() == "ExportAPERO"){
             while(reader.readNextStartElement()){
-
                 if(reader.name() == "CalibrationInternConique"){
                     while(reader.readNextStartElement()){
-
                         if(reader.name() == "PP"){
                             ppa = reader.readElementText();
                         }
-
                         else if(reader.name() == "F"){
                             focale = reader.readElementText();
                         }
-                        else if(reader.name() == "SzImg"){
+                        else if(reader.name() == "SzIm"){
                             sizeImg = reader.readElementText();
                         }
-                        else if(reader.name() == "CalibDistorsion"){
+                        else if(reader.name() == "CalibDistortion"){
                             while(reader.readNextStartElement()){
                                 if(reader.name() == "ModRad"){
                                     while(reader.readNextStartElement()){
@@ -179,23 +177,27 @@ ccCalibration xmlToCali(QString filePath)
                                             pps = reader.readElementText();
                                         }
                                         else if(reader.name() == "CoeffDist"){
-                                            distorsionCoefs = reader.readElementText();
+                                            distorsionCoefs1 = reader.readElementText();
+                                            reader.skipCurrentElement();
+                                            distorsionCoefs2 = reader.readElementText();
+                                            reader.skipCurrentElement();
+                                            distorsionCoefs3 = reader.readElementText();
                                         }
-//                                        else if(reader.name() == "L2"){
-//                                            l2 = reader.readElementText();
-//                                        }
-//                                        else if(reader.name() == "L2"){
-//                                            l2 = reader.readElementText();
-//                                        }
                                         else
                                             reader.skipCurrentElement();
                                     }
                                 }
+                                else
+                                    reader.skipCurrentElement();
 
                             }
                         }
+                        else
+                            reader.skipCurrentElement();
                     }
                  }
+                else
+                    reader.skipCurrentElement();
              }
         }
         else
@@ -203,15 +205,28 @@ ccCalibration xmlToCali(QString filePath)
     }
     file.close();
 
-    if (ppa == "test" || focale == "test" || sizeImg == "test" || pps == "test" || distorsionCoefs == "test"){
+    if (ppa == "test" || focale == "test" || sizeImg == "test" || pps == "test" || distorsionCoefs1 == "test"){
         std::cout << "File not conform!" << std::endl;
         QMessageBox msgBox;
         msgBox.setText("Orientation file" + filePath +" not conform");
         msgBox.exec();
     }
-    std::cout<<ppa.toStdString()<<std::endl;
-    std::cout<<focale.toStdString()<<std::endl;
-    std::cout<<sizeImg.toStdString()<<std::endl;
-    std::cout<<distorsionCoefs.toStdString()<<std::endl;
+
+    //Place the calibration parametters in the right type
+    QStringList ppaCoord = ppa.split(' ');
+    Vector2Tpl<double> ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
+
+    double foc = focale.toDouble();
+
+    QStringList szImList = sizeImg.split(' ');
+    Vector2Tpl<int> szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
+
+    QStringList ppsCoord = pps.split(' ');
+    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
+
+    Vector3Tpl<double> coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
+
+    ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
+    return cali;
 
 }

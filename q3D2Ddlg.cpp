@@ -45,7 +45,10 @@ void q3D2DDlg::load()
                                                                QDir::homePath(),
                                                                QFileDialog::ShowDirsOnly
                                                                | QFileDialog::DontResolveSymlinks);
-
+//    QString dirImgStr = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
+//                                                          QString("~/Documents/PPMD/ProjetInfo"),
+//                                                          QFileDialog::ShowDirsOnly
+//                                                          | QFileDialog::DontResolveSymlinks);
     // Parameters folder is usually the same as images folder
     QString dirParamStr = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
                                                          QDir(dirImgStr).absolutePath(),
