@@ -20,7 +20,7 @@
 class cc3D2DImage : public QImage
 {
 public:
-    cc3D2DImage(QString _path, QString _name);
+    cc3D2DImage(QString _path, QString _name, ccOrientation _orientation);
 
 //    void setVectVisee();
 //    Vector2Tpl<float> addDisto(Vector2Tpl<float>);
@@ -29,7 +29,7 @@ public:
 protected:
     QString name;
 //    ccCalibration calib;
-//    ccOrientation ori;
+    ccOrientation ori;
 //    Vector2Tpl<float> vectVisee;
 };
 

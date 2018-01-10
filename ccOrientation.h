@@ -2,15 +2,21 @@
 #define CCORIENTATION_H
 
 //CCLib
-//#include <Matrix.h>
+#include <CCGeom.h>
+#include <SquareMatrix.h>
+
+//Qt
+#include <QString>
+
 
 class ccOrientation
 {
 public:
-    ccOrientation();
+    ccOrientation(Vector3Tpl<double> _sommetPdV, CCLib::SquareMatrixd _rotation);
 private:
-//    CCLib::MatrixTpl<Scalar> rotation;
-//    CCLib::MatrixTpl<scalar> sommetPdV;
+    CCLib::SquareMatrixd rotation;
+    Vector3Tpl<double> sommetPdV;
+    QString pathCali;
 };
 
 #endif // CCORIENTATION_H
