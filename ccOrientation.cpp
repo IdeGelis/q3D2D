@@ -12,3 +12,17 @@ ccOrientation::ccOrientation(Vector3Tpl<double> _sommetPdV, CCLib::SquareMatrixd
 
 }
 
+//CCLib::SquareMatrixd ccOrientation::getRotation()
+//{
+//    return this->rotation;
+//}
+
+//Vector3Tpl<double> ccOrientation::getSommetPdV()
+//{
+//    return this->sommetPdV;
+//}
+
+//QString ccOrientation::getPathCali()
+//{
+//    return this->pathCali;
+//}

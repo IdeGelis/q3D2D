@@ -1,9 +1,11 @@
 //System
 #include <iostream>
+#include <vector>
 
 //3D2D
 #include "ccOrientation.h"
 #include "ccCalibration.h"
+#include "cc3D2DImage.h"
 
 //Qt
 #include <QString>
@@ -229,4 +231,28 @@ ccCalibration xmlToCali(QString filePath)
     ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
     return cali;
 
+}
+
+
+ccCalibration calibExistOrCreate(QString pathCali,std::vector<cc3D2DImage>  images, QString pathFolderOriCali)
+{
+    // calibExistOrCreate test if the ccCalibration given in the file pathCali already exists
+    // If it exists calibExistOrCreate return this ccCalibration object otherwise it creates this object
+
+    int nbIm = images.size();
+
+    for (int i=0; i<nbIm; i++){
+       // if (QString::compare(pathCali, images.at(i).ori.pathCali)==0){
+        if (pathCali == images.at(i).ori.pathCali) {
+            return images.at(i).calib;
+        }
+    }
+
+    //If it attempts here, it means that the ccCalibration object associated to pathCali doesn't exist
+    //So we need to create it from the XML file
+    QStringList pathCal = pathCali.split('/');
+    QString caliFile = pathCal.at(pathCal.size()-1);
+    ccCalibration cali = xmlToCali(pathFolderOriCali + "/" + caliFile);
+
+    return cali;
 }

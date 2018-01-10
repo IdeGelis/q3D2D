@@ -13,7 +13,6 @@ public:
     void setDistoMax();
 //    vectorTpl<float> calcDisto(vector2Tpl<float>);
 
-protected:
     Vector3Tpl<double> distorsionCoefs;
     Vector2Tpl<double> ppa;
     Vector2Tpl<double> pps;
