@@ -1,10 +1,25 @@
+//##########################################################################
+//#                                                                        #
+//#                       CLOUDCOMPARE PLUGIN: q3D2D                       #
+//#                                                                        #
+//#  This program is free software; you can redistribute it and/or modify  #
+//#  it under the terms of the GNU General Public License as published by  #
+//#  the Free Software Foundation; version 2 of the License.               #
+//#                                                                        #
+//#  This program is distributed in the hope that it will be useful,       #
+//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+//#  GNU General Public License for more details.                          #
+//#                                                                        #
+//#                             COPYRIGHT: ENSG Iris de Gelis              #
+//#                                                                        #
+//##########################################################################
+
 //System
 #include <iostream>
 #include <string>
 
 //3D2D
-//#include "ccCalibration.h"
-//#include "ccOrientation.h"
 #include "ccWorkSite.h"
 #include "q3D2Ddlg.h"
 #include "ui_q3D2Ddlg.h"
@@ -15,16 +30,24 @@
 #include <QDir>
 #include <QXmlStreamReader>
 
+//qCC
+#include <ccGLWindow.h>
+
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::q3D2DDlg)
 {
     ui->setupUi(this);
-
+//    ccWorkSite currentWorkSite();
+//    ccWorkSite *ptrCurrentWS(0);
+//    ptrCurrentWS= &currentWorkSite;
+    this->currentWorkSite = new ccWorkSite();
+    //ccWorkSite *currentWorkSite(0);
+    //currentWorkSite = new ccWorkSite;
+    std::cout<<currentWorkSite->pathFolderImg.toStdString()<<std::endl;
+    //std::cout<<ptrCurrentWS<<std::endl;
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
-    //QObject::connect(ui->push_loadImg,SIGNAL(released()),this,SLOT(loadImgFolder()));
-    //QObject::connect(ui->push_params,SIGNAL(released()),this,SLOT(loadParamsFolder()));
     QObject::connect(ui->push_slctPt,SIGNAL(released()),this,SLOT(selectPt()));
     QObject::connect(ui->push_reproj,SIGNAL(released()),this,SLOT(reproj()));
     QObject::connect(ui->push_display,SIGNAL(released()),this,SLOT(displayImg()));
@@ -58,9 +81,12 @@ void q3D2DDlg::load()
 
 
     //Creation of the work site
-    ccWorkSite currentWorkSite(dirImgStr,dirParamStr);
+    //ccWorkSite currentWorkSite(dirImgStr,dirParamStr);
     std::cout<<"creation current work site ok!"<<std::endl;
-    currentWorkSite.initialise();
+    this->currentWorkSite->initialise(dirImgStr,dirParamStr);
+    ui->label_img->setText(dirImgStr);
+    ui->label_param->setText(dirParamStr);
+    ui->push_slctPt->setEnabled(true);
 
 
 }
@@ -69,6 +95,11 @@ void q3D2DDlg::load()
 void q3D2DDlg::selectPt()
 {
     std::cout<<"Selecting mode"<<std::endl;
+    //http://www.cloudcompare.org/forum/viewtopic.php?t=514
+
+//    ccGLWindow* win = m_app->getActiveGLWindow();
+//    if (win)
+//        win->setPickingMode(POINT_PICKING);
 }
 
 void q3D2DDlg::reproj()

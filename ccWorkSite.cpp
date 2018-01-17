@@ -1,3 +1,21 @@
+//##########################################################################
+//#                                                                        #
+//#                       CLOUDCOMPARE PLUGIN: q3D2D                       #
+//#                                                                        #
+//#  This program is free software; you can redistribute it and/or modify  #
+//#  it under the terms of the GNU General Public License as published by  #
+//#  the Free Software Foundation; version 2 of the License.               #
+//#                                                                        #
+//#  This program is distributed in the hope that it will be useful,       #
+//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+//#  GNU General Public License for more details.                          #
+//#                                                                        #
+//#                             COPYRIGHT: ENSG Iris de Gelis              #
+//#                                                                        #
+//##########################################################################
+
+
 //System
 #include <iostream>
 #include <vector>
@@ -13,25 +31,28 @@
 #include <QDir>
 #include <QImage>
 
-ccWorkSite::ccWorkSite(QString _pathFolderImg, QString _pathFolderOriCali)
-    :pathFolderImg(_pathFolderImg), pathFolderOriCali(_pathFolderOriCali)
+//ccWorkSite::ccWorkSite(QString _pathFolderImg, QString _pathFolderOriCali)
+//    :pathFolderImg(_pathFolderImg), pathFolderOriCali(_pathFolderOriCali)
+//{
+//}
+ccWorkSite::ccWorkSite()
 {
 }
 
-void ccWorkSite::initialise()
+void ccWorkSite::initialise(QString _pathFolderImg, QString _pathFolderOriCali)
 {
     // initialise() is going to create all cc3D2DImages object
     // with the link to the calibration and orientation information
+
     std::cout<<"Initializing..."<<std::endl;
+
+    //Set pathFolderImg and pathFolderOriCali
+    this->pathFolderImg = _pathFolderImg;
+    this->pathFolderOriCali = _pathFolderOriCali;
 
     //Create QDir objects to access folders
     QDir dirImg  = QDir(this->pathFolderImg);
     QDir dirParam  = QDir(this->pathFolderOriCali);
-
-    //QStringList dirImgContent = dirImg.entryList(QDir::Files);
-
-
-    //QStringList dirParamContent = dirParam.entryList(QDir::Files); cc
 
     //Selection of all orientation files
     QStringList filters;
@@ -67,9 +88,8 @@ void ccWorkSite::initialise()
 
     }
 
-//    for(int unsigned i=0;i<images.size();i++){
-//        std::cout<< images[i].name.toStdString()<<std::endl;
-//    }
+    this->images = images;
 
+    std::cout<<"Initialization done."<<std::endl;
 
 }

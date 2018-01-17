@@ -80,6 +80,10 @@ void q3D2D::doAction()
     std::cout<<"Initialisation of q3D2D Plugin"<<std::endl;
     //show dialog to let the user choose the operation to perform
     //q3D2DDlg dlg(m_app->getMainWindow());
+
+//    ccGLWindow* win = m_app->getActiveGLWindow();
+//    if (win)
+//        win->setPickingMode(POINT_PICKING);
     q3D2DDlg dlg;
     dlg.exec();
 

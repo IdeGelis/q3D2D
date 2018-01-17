@@ -1,7 +1,11 @@
 #ifndef Q3D2DDLG_H
 #define Q3D2DDLG_H
 
+//Qt
 #include <QDialog>
+
+//3D2D
+#include "ccWorkSite.h"
 
 namespace Ui {
 class q3D2DDlg;
@@ -17,6 +21,7 @@ public:
 
 private:
     Ui::q3D2DDlg *ui;
+    ccWorkSite *currentWorkSite;
 
 public slots:
     //void loadImgFolder();
