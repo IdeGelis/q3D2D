@@ -23,8 +23,8 @@
 #include <SquareMatrix.h>
 
 
-ccCalibration::ccCalibration(Vector2Tpl<double> _ppa, Vector2Tpl<double> _pps, double _focale,
-                             Vector2Tpl<int> _szIm, Vector3Tpl<double> _distorsionCoefs)
+ccCalibration::ccCalibration(CCVector2 _ppa, CCVector2 _pps, double _focale,
+                             CCVector2 _szIm, CCVector3 _distorsionCoefs)
     : ppa(_ppa), pps(_pps), focale(_focale), szIm(_szIm), distorsionCoefs(_distorsionCoefs)
 {
 

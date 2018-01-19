@@ -56,6 +56,22 @@ void cc3D2DImage::setVectVisee()
 
 //    this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
 
+//    CCVector3 coordPpaWorkSiteFrame;
+//    Vector2Tpl<double> tmp;
+
+
+//    //I(-1)
+//    tmp = this->calib.ppa*(1/this->calib.focale) - this->calib.ppa;
+
+//    //PI(-1)
+//    coordPpaWorkSiteFrame[2] = this->ori.sommetPdV[2] + 1;
+//    coordPpaWorkSiteFrame[0] = coordPpaWorkSiteFrame[2] * tmp[0];
+//    coordPpaWorkSiteFrame[1] = coordPpaWorkSiteFrame[2] * tmp[1];
+
+//    coordPpaWorkSiteFrame = (this->ori.rotation.inv())*coordPpaWorkSiteFrame + this->ori.sommetPdV;
+
+//    this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
+
 }
 
 //Vector2Tpl<double> cc3D2DImage::formuleImg(ccPoint point)

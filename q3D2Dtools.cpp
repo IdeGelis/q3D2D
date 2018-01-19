@@ -125,7 +125,8 @@ ccOrientation xmlToOri(QString filePath)
 
     //Place the orientation parametters in the right type
     QStringList centreCoord = centre.split(' ');
-    Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
+    //Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
+    CCVector3 sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
 
     CCLib::SquareMatrixd rotation(3);
 
@@ -233,17 +234,21 @@ ccCalibration xmlToCali(QString filePath)
 
     //Place the calibration parametters in the right type
     QStringList ppaCoord = ppa.split(' ');
-    Vector2Tpl<double> ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
+//    Vector2Tpl<double> ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
+    CCVector2 ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
 
     double foc = focale.toDouble();
 
     QStringList szImList = sizeImg.split(' ');
-    Vector2Tpl<int> szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
+//    Vector2Tpl<int> szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
+    CCVector2 szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
 
     QStringList ppsCoord = pps.split(' ');
-    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
+//    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
+    CCVector2 ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
 
-    Vector3Tpl<double> coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
+    //Vector3Tpl<double> coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
+    CCVector3 coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
 
     ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
     return cali;

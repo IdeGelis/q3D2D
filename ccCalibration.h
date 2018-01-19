@@ -8,15 +8,15 @@
 class ccCalibration
 {
 public:
-    ccCalibration(Vector2Tpl<double> _ppa, Vector2Tpl<double> _pps, double _focale, Vector2Tpl<int> _szIm, Vector3Tpl<double> _distorsionCoefs );
+    ccCalibration(CCVector2 _ppa, CCVector2 _pps, double _focale, CCVector2 _szIm, CCVector3 _distorsionCoefs );
     void setAngleShot();
     void setDistoMax();
 //    vectorTpl<float> calcDisto(vector2Tpl<float>);
 
-    Vector3Tpl<double> distorsionCoefs;
-    Vector2Tpl<double> ppa;
-    Vector2Tpl<double> pps;
-    Vector2Tpl<int> szIm;
+    CCVector3 distorsionCoefs;
+    CCVector2 ppa;
+    CCVector2 pps;
+    CCVector2 szIm;
     double focale;
 //    std::vector<double> drmax;
     double angleShot;

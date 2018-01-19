@@ -12,10 +12,12 @@
 class ccOrientation
 {
 public:
-    ccOrientation(Vector3Tpl<double> _sommetPdV, CCLib::SquareMatrixd _rotation, QString _pathCali);
+//    ccOrientation(Vector3Tpl<double> _sommetPdV, CCLib::SquareMatrixd _rotation, QString _pathCali);
+    ccOrientation(CCVector3 _sommetPdV, CCLib::SquareMatrixd _rotation, QString _pathCali);
 
     CCLib::SquareMatrixd rotation;
-    Vector3Tpl<double> sommetPdV;
+//    Vector3Tpl<double> sommetPdV;
+    CCVector3 sommetPdV;
     QString pathCali;
 
 

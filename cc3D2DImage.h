@@ -26,11 +26,13 @@ public:
 //    Vector2Tpl<float> addDisto(Vector2Tpl<float>);
 //    Vector2Tpl<float> formuleImg(Vecto2Tpl<float>);
 
-public:
+//public:
     QString name;
     ccCalibration calib;
     ccOrientation ori;
-    Vector2Tpl<double> vectVisee;
+//    Vector3Tpl<double> vectVisee;
+    CCVector3 vectVisee;
+
     Vector2Tpl<double> formuleImg(ccPoint point);
     //Vector2Tpl<double> addDisto(Vector2Tpl coordIm);
 };
