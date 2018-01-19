@@ -18,6 +18,7 @@
 //System
 #include <iostream>
 #include <string>
+#include <typeinfo>
 
 //3D2D
 #include "ccWorkSite.h"
@@ -32,20 +33,21 @@
 
 //qCC
 #include <ccGLWindow.h>
+#include "ccPickingHub.h"
+#include "ccMainAppInterface.h"
+
 
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::q3D2DDlg)
 {
     ui->setupUi(this);
-//    ccWorkSite currentWorkSite();
-//    ccWorkSite *ptrCurrentWS(0);
-//    ptrCurrentWS= &currentWorkSite;
+
     this->currentWorkSite = new ccWorkSite();
-    //ccWorkSite *currentWorkSite(0);
-    //currentWorkSite = new ccWorkSite;
-    std::cout<<currentWorkSite->pathFolderImg.toStdString()<<std::endl;
-    //std::cout<<ptrCurrentWS<<std::endl;
+
+    // //!\\ Juste pour les tests à enlever dans la version finale
+    ui->push_slctPt->setEnabled(true);
+
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
     QObject::connect(ui->push_slctPt,SIGNAL(released()),this,SLOT(selectPt()));
@@ -96,10 +98,16 @@ void q3D2DDlg::selectPt()
 {
     std::cout<<"Selecting mode"<<std::endl;
     //http://www.cloudcompare.org/forum/viewtopic.php?t=514
-
-//    ccGLWindow* win = m_app->getActiveGLWindow();
-//    if (win)
-//        win->setPickingMode(POINT_PICKING);
+    //std::cout<<typeid(this->app).name()<<std::endl;
+    ccPickingHub* m_pickingHub = this->app->pickingHub();
+    m_pickingHub->togglePickingMode(true);
+    //m_pickingHub->addListener();
+    //connect(win, SIGNAL(itemPicked(ccHObject*, unsigned, int, int, const CCVector3&)), this, SLOT(processPickedPoint(ccHObject*, unsigned, int, int, const CCVector3&)));
+//    this->startPicking();
+//    this->win->setPickingMode(ccGLWindow::POINT_PICKING);
+//    std::cout<<this->win->getPickingMode()<<std::endl;
+//    this->win->setPickingMode(ccGLWindow::DEFAULT_PICKING);
+//    std::cout<<this->win->getPickingMode()<<std::endl;
 }
 
 void q3D2DDlg::reproj()
@@ -111,3 +119,27 @@ void q3D2DDlg::displayImg()
 {
     std::cout<<"Displaying images..."<<std::endl;
 }
+
+
+//registers this plugin with the picking hub
+//bool q3D2DDlg::startPicking()
+//{
+//    if (m_picking) //already picking... don't need to add again
+//        return true;
+
+//    //activate "point picking mode"
+//    if (!m_app->pickingHub())  //no valid picking hub
+//    {
+//        m_app->dispToConsole("[q3D2D] Could not retrieve valid picking hub. Measurement aborted.", ccMainAppInterface::ERR_CONSOLE_MESSAGE);
+//        return false;
+//    }
+
+//    if (!m_app->pickingHub()->addListener(this, true, true))
+//    {
+//        m_app->dispToConsole("Another tool is already using the picking mechanism. Stop it first", ccMainAppInterface::ERR_CONSOLE_MESSAGE);
+//        return false;
+//    }
+
+//    m_picking = true;
+//    return true;
+//}

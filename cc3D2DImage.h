@@ -30,7 +30,6 @@ public:
     QString name;
     ccCalibration calib;
     ccOrientation ori;
-//    Vector3Tpl<double> vectVisee;
     CCVector3 vectVisee;
 
     CCVector2 formuleImg(ccPoint point);

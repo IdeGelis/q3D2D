@@ -17,14 +17,20 @@
 
 //System
 #include <iostream>
+#include <typeinfo>
 
 //Qt
 #include <QtGui>
 #include <QMainWindow>
+#include <QString>
 
 //3D2D
 #include "q3D2D.h"
 #include "q3D2Ddlg.h"
+
+//qCC
+#include "ccGLWindow.h"
+#include "ccPickingHub.h"
 
 //Default constructor: should mainly be used to initialize
 //actions (pointers) and other members
@@ -81,11 +87,20 @@ void q3D2D::doAction()
     //show dialog to let the user choose the operation to perform
     //q3D2DDlg dlg(m_app->getMainWindow());
 
-//    ccGLWindow* win = m_app->getActiveGLWindow();
-//    if (win)
-//        win->setPickingMode(POINT_PICKING);
-    q3D2DDlg dlg;
-    dlg.exec();
+    ccGLWindow* win = m_app->getActiveGLWindow();
+    m_app->dispToConsole("[q3D2D] Ouverture de q3D2D!",ccMainAppInterface::STD_CONSOLE_MESSAGE);
+    //std::cout<<m_app->pickingHub()<<std::endl;
+    if (win){
+        q3D2DDlg dlg;
+        dlg.win = win;
+        std::cout<<win->windowTitle().toStdString()<<std::endl;
+        std::cout<<typeid(m_app).name()<<std::endl;
+        dlg.app = m_app;
+        dlg.exec();
+    }
+
+
+
 
 
 
