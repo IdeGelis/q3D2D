@@ -125,22 +125,22 @@ ccOrientation xmlToOri(QString filePath)
 
     //Place the orientation parametters in the right type
     QStringList centreCoord = centre.split(' ');
-    //Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
-    CCVector3 sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
+    //Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toFloat(),centreCoord.at(1).toFloat(),centreCoord.at(2).toFloat());
+    CCVector3 sommetPriseVue(centreCoord.at(0).toFloat(),centreCoord.at(1).toFloat(),centreCoord.at(2).toFloat());
 
     CCLib::SquareMatrixd rotation(3);
 
     QStringList l1List = l1.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(0,i,l1List.at(i).toDouble());
+        rotation.setValue(0,i,l1List.at(i).toFloat());
     }
     QStringList l2List = l2.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(1,i,l2List.at(i).toDouble());
+        rotation.setValue(1,i,l2List.at(i).toFloat());
     }
     QStringList l3List = l3.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(2,i,l3List.at(i).toDouble());
+        rotation.setValue(2,i,l3List.at(i).toFloat());
     }
 
     //Create the ccOrientation object
@@ -234,21 +234,21 @@ ccCalibration xmlToCali(QString filePath)
 
     //Place the calibration parametters in the right type
     QStringList ppaCoord = ppa.split(' ');
-//    Vector2Tpl<double> ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
-    CCVector2 ppaVect(ppaCoord.at(0).toDouble(), ppaCoord.at(1).toDouble());
+//    Vector2Tpl<double> ppaVect(ppaCoord.at(0).toFloat(), ppaCoord.at(1).toFloat());
+    CCVector2 ppaVect(ppaCoord.at(0).toFloat(), ppaCoord.at(1).toFloat());
 
-    double foc = focale.toDouble();
+    double foc = focale.toFloat();
 
     QStringList szImList = sizeImg.split(' ');
 //    Vector2Tpl<int> szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
     CCVector2 szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
 
     QStringList ppsCoord = pps.split(' ');
-//    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
-    CCVector2 ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
+//    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toFloat(), ppsCoord.at(1).toFloat());
+    CCVector2 ppsVect(ppsCoord.at(0).toFloat(), ppsCoord.at(1).toFloat());
 
-    //Vector3Tpl<double> coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
-    CCVector3 coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
+    //Vector3Tpl<double> coefDisto(distorsionCoefs1.toFloat(),distorsionCoefs2.toFloat(),distorsionCoefs3.toFloat());
+    CCVector3 coefDisto(distorsionCoefs1.toFloat(),distorsionCoefs2.toFloat(),distorsionCoefs3.toFloat());
 
     ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
     return cali;
@@ -277,4 +277,15 @@ ccCalibration calibExistOrCreate(QString pathCali,std::vector<cc3D2DImage>  imag
     ccCalibration cali = xmlToCali(pathFolderOriCali + "/" + caliFile);
 
     return cali;
+}
+
+
+CCVector3 multiply(CCLib::SquareMatrixd mat, CCVector3 vect)
+{
+    CCVector3 res;
+    res.x = mat.getValue(0,0)*vect.x + mat.getValue(0,1)*vect.y + mat.getValue(0,2)*vect.z;
+    res.y = mat.getValue(1,0)*vect.x + mat.getValue(1,1)*vect.y + mat.getValue(1,2)*vect.z;
+    res.z = mat.getValue(2,0)*vect.x + mat.getValue(2,1)*vect.y + mat.getValue(2,2)*vect.z;
+
+    return res;
 }

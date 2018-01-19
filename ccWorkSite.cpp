@@ -83,6 +83,8 @@ void ccWorkSite::initialise(QString _pathFolderImg, QString _pathFolderOriCali)
 
         // Creation of the cc3D2DImage object
         cc3D2DImage img(pathImg,imgName,ori,cali);
+        img.setVectVisee();
+
 
         images.push_back(img);
 

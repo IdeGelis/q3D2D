@@ -27,6 +27,7 @@
 #include "ccOrientation.h"
 #include "ccCalibration.h"
 #include "ccPoint.h"
+#include "q3D2Dtools.h"
 
 //Qt
 #include <QImage>
@@ -40,37 +41,22 @@ cc3D2DImage::cc3D2DImage(QString _path,QString _name,ccOrientation _ori,ccCalibr
 void cc3D2DImage::setVectVisee()
 {
     // Get the coordonate of the ppa in the working site frame : by the inversion of the image formula
-//    Vector3Tpl<double> coordPpaWorkSiteFrame;
-//    Vector2Tpl<double> tmp;
+
+    CCVector3 coordPpaWorkSiteFrame;
+    CCVector2 tmp;
 
 
-//    //I(-1)
-//    tmp = this->calib.ppa*(1/this->calib.focale) - this->calib.ppa;
+    //I(-1)
+    tmp = this->calib.ppa*(1/this->calib.focale) - this->calib.ppa;
 
-//    //PI(-1)
-//    coordPpaWorkSiteFrame[2] = this->ori.sommetPdV[2] + 1;
-//    coordPpaWorkSiteFrame[0] = coordPpaWorkSiteFrame[2] * tmp[0];
-//    coordPpaWorkSiteFrame[1] = coordPpaWorkSiteFrame[2] * tmp[1];
+    //PI(-1)
+    coordPpaWorkSiteFrame.z = this->ori.sommetPdV.z + 1;
+    coordPpaWorkSiteFrame.x = coordPpaWorkSiteFrame.z * tmp.x;
+    coordPpaWorkSiteFrame.y = coordPpaWorkSiteFrame.z * tmp.y;
+    //coordPpaWorkSiteFrame.u;
+    coordPpaWorkSiteFrame = multiply((this->ori.rotation.inv()),coordPpaWorkSiteFrame) + this->ori.sommetPdV;
 
-//    coordPpaWorkSiteFrame = (this->ori.rotation.inv())*coordPpaWorkSiteFrame + this->ori.sommetPdV;
-
-//    this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
-
-//    CCVector3 coordPpaWorkSiteFrame;
-//    Vector2Tpl<double> tmp;
-
-
-//    //I(-1)
-//    tmp = this->calib.ppa*(1/this->calib.focale) - this->calib.ppa;
-
-//    //PI(-1)
-//    coordPpaWorkSiteFrame[2] = this->ori.sommetPdV[2] + 1;
-//    coordPpaWorkSiteFrame[0] = coordPpaWorkSiteFrame[2] * tmp[0];
-//    coordPpaWorkSiteFrame[1] = coordPpaWorkSiteFrame[2] * tmp[1];
-
-//    coordPpaWorkSiteFrame = (this->ori.rotation.inv())*coordPpaWorkSiteFrame + this->ori.sommetPdV;
-
-//    this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
+    this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
 
 }
 
