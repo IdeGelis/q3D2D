@@ -10,8 +10,8 @@ class ccPoint
 {
 public:
     ccPoint();
-    Vector3Tpl<double> coord;
-    Vector3Tpl<double> normal;
+    CCVector3 coord;
+    CCVector3 normal;
 };
 
 #endif // CCPOINT_H

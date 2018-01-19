@@ -60,35 +60,36 @@ void cc3D2DImage::setVectVisee()
 
 }
 
-//Vector2Tpl<double> cc3D2DImage::formuleImg(ccPoint point)
-//{
-//    //Calculate the coordinates of the point in the image frame
+CCVector2 cc3D2DImage::formuleImg(ccPoint point)
+{
+    //Calculate the coordinates of the point in the image frame
 
-////    Vector2Tpl<double> coordRepIm;
-////    Vector2Tpl<double> tmp;
+    CCVector2 coordRepIm;
+    CCVector3 tmp;
 
-////    tmp = this->ori.rotation * point.coord - this->ori.sommetPdV;
+    tmp = multiply(this->ori.rotation, point.coord) - this->ori.sommetPdV;
 
-////    //PI
-////    coordRepIm[0] = tmp[0]/tmp[2];
-////    coordRepIm[1] = tmp[1]/tmp[2];
+    //PI
+    coordRepIm.x = tmp.x/tmp.z;
+    coordRepIm.y = tmp.y/tmp.z;
 
-////    //I
-////    coordRepIm = this->calib.focale * coordRepIm + this->calib.ppa;
+    //I
+    // //!\\  double * CCVector does not exist!! Do CCVector * double
+    coordRepIm = coordRepIm * this->calib.focale + this->calib.ppa;
 
-////    return coordRepIm;
-//}
+    return coordRepIm;
+}
 
-//Vector2Tpl<double> cc3D2DImage::addDisto(Vector2Tpl coordIm)
-//{
-//    //addDisto return the coordinate where a radial distorsion has been added.
+CCVector2 cc3D2DImage::addDisto(CCVector2 coordIm)
+{
+    //addDisto return the coordinate where a radial distorsion has been added.
 
-////    Vector2Tpl<double> coordImDisto;
+    CCVector2 coordImDisto;
+    coordImDisto = this->calib.pps;
 
-////    coordImDisto = this->calib.pps;
-////    double d2 = (coordIm[0]-this->calib.pps[0])**2 + (coordIm[1]-this->calib.pps[1])**2;
-////    double fact = 1 + this->calib.distorsionCoefs[0]*d2 + this->calib.distorsionCoefs[1]*d2 + this->calib.distorsionCoefs[0]*d2;
-
-////    coordImDisto = coordImDisto + fact*(coordIm - this->calib.pps);
-////    return coordImDisto;
-//}
+    double d2 = std::pow(coordIm[0]-this->calib.pps.x,2) + std::pow(coordIm[1]-this->calib.pps.y,2);
+    double fact = 1 + this->calib.distorsionCoefs[0]*d2 + this->calib.distorsionCoefs[1]*d2 + this->calib.distorsionCoefs[0]*d2;
+    // //!\\  double * CCVector does not exist!! Do CCVector * double
+    coordImDisto = coordImDisto + (coordIm - this->calib.pps)*fact;
+    return coordImDisto;
+}

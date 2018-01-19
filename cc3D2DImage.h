@@ -33,8 +33,8 @@ public:
 //    Vector3Tpl<double> vectVisee;
     CCVector3 vectVisee;
 
-    Vector2Tpl<double> formuleImg(ccPoint point);
-    //Vector2Tpl<double> addDisto(Vector2Tpl coordIm);
+    CCVector2 formuleImg(ccPoint point);
+    CCVector2 addDisto(CCVector2 coordIm);
 };
 
 #endif // CC3D2DIMAGE_H
