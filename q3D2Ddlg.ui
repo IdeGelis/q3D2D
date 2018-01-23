@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>727</width>
-    <height>176</height>
+    <width>320</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>3D2D</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
     <widget class="QPushButton" name="push_load">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -30,7 +30,80 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="5">
+   <item>
+    <widget class="QLabel" name="label_img">
+     <property name="text">
+      <string>Chemin vers le dossier contenant  les images </string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_param">
+     <property name="text">
+      <string>Chemin vers le dossier contenant les paramètres</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="push_slctPt">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Sélectionner un point</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="x">
+       <property name="text">
+        <string>x:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_x">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="y">
+       <property name="text">
+        <string>y:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_y">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="z">
+       <property name="text">
+        <string>z:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_z">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QPushButton" name="push_reproj">
      <property name="enabled">
       <bool>false</bool>
@@ -49,7 +122,21 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item>
+    <widget class="QCheckBox" name="checkBox_autoReproj">
+     <property name="text">
+      <string>Calcul automatique de la reprojection</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_BestImg">
+     <property name="text">
+      <string>Affichage de la meilleure image par défaut</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Liste des images voyant le point:</string>
@@ -59,91 +146,21 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1" rowspan="2" colspan="2">
-    <widget class="QListView" name="listImg"/>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QListView" name="listImg"/>
+     </item>
+     <item>
+      <widget class="QScrollBar" name="verticalScrollBar">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="5" column="3" rowspan="2">
-    <widget class="QScrollBar" name="verticalScrollBar">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_img">
-     <property name="text">
-      <string>Chemin vers le dossier contenant  les images </string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5">
-    <spacer name="horizontalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="5">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="4" colspan="2">
-    <widget class="QCheckBox" name="checkBox_BestImg">
-     <property name="text">
-      <string>Affichage de la meilleure image par défaut</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QPushButton" name="push_slctPt">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Sélectionner un point</string>
-     </property>
-     <property name="autoDefault">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="4">
-    <widget class="QLabel" name="z">
-     <property name="text">
-      <string>z:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLabel" name="x">
-     <property name="text">
-      <string>x:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4" colspan="2">
-    <widget class="QCheckBox" name="checkBox_autoReproj">
-     <property name="text">
-      <string>Calcul automatique de la reprojection</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
+   <item>
     <widget class="QPushButton" name="push_display">
      <property name="enabled">
       <bool>false</bool>
@@ -153,20 +170,6 @@
      </property>
      <property name="autoDefault">
       <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="label_param">
-     <property name="text">
-      <string>Chemin vers le dossier contenant les paramètres</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="2">
-    <widget class="QLabel" name="y">
-     <property name="text">
-      <string>y:</string>
      </property>
     </widget>
    </item>

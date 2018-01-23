@@ -18,6 +18,10 @@
 //3D2D
 #include "ccPoint.h"
 
+//CCLib
+#include <CCGeom.h>
+#include <SquareMatrix.h>
+
 ccPoint::ccPoint()
 {
 

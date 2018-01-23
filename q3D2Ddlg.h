@@ -6,6 +6,7 @@
 
 //3D2D
 #include "ccWorkSite.h"
+#include "ccPoint.h"
 
 //qCC
 #include <ccGLWindow.h>
@@ -26,18 +27,17 @@ public:
     ~q3D2DDlg();
     ccGLWindow* win;
     ccMainAppInterface* m_app;
-    //bool startPicking();
+
 
 
 private:
     Ui::q3D2DDlg *ui;
     ccWorkSite *currentWorkSite;
+    ccPoint *currentPoint;
 
 
 
 public slots:
-    //void loadImgFolder();
-    //void loadParamsFolder();
     void load();
     void reproj();
     void displayImg();
