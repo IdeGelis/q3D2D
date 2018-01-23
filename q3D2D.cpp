@@ -89,14 +89,12 @@ void q3D2D::doAction()
 
     ccGLWindow* win = m_app->getActiveGLWindow();
     m_app->dispToConsole("[q3D2D] Ouverture de q3D2D!",ccMainAppInterface::STD_CONSOLE_MESSAGE);
-    //std::cout<<m_app->pickingHub()<<std::endl;
+
     if (win){
-        q3D2DDlg dlg;
-        dlg.win = win;
-        std::cout<<win->windowTitle().toStdString()<<std::endl;
-        std::cout<<typeid(m_app).name()<<std::endl;
-        dlg.app = m_app;
-        dlg.exec();
+        q3D2DDlg* dlg = new q3D2DDlg();
+        dlg->win = win;
+        dlg->m_app = m_app;
+        dlg->show();
     }
 
 

@@ -35,6 +35,7 @@
 #include <ccGLWindow.h>
 #include "ccPickingHub.h"
 #include "ccMainAppInterface.h"
+#include "ccPickingListener.h"
 
 
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
@@ -99,15 +100,72 @@ void q3D2DDlg::selectPt()
     std::cout<<"Selecting mode"<<std::endl;
     //http://www.cloudcompare.org/forum/viewtopic.php?t=514
     //std::cout<<typeid(this->app).name()<<std::endl;
-    ccPickingHub* m_pickingHub = this->app->pickingHub();
-    m_pickingHub->togglePickingMode(true);
-    //m_pickingHub->addListener();
+    ccPickingHub* m_pickingHub = this->m_app->pickingHub();
+    //m_pickingHub->togglePickingMode(true);
+    m_pickingHub->addListener(this,true,true);
     //connect(win, SIGNAL(itemPicked(ccHObject*, unsigned, int, int, const CCVector3&)), this, SLOT(processPickedPoint(ccHObject*, unsigned, int, int, const CCVector3&)));
 //    this->startPicking();
 //    this->win->setPickingMode(ccGLWindow::POINT_PICKING);
 //    std::cout<<this->win->getPickingMode()<<std::endl;
 //    this->win->setPickingMode(ccGLWindow::DEFAULT_PICKING);
 //    std::cout<<this->win->getPickingMode()<<std::endl;
+}
+
+//This function is called when a point is picked (through the picking hub)
+void q3D2DDlg::onItemPicked(const ccPickingListener::PickedItem& pi)
+{
+    pointPicked(pi.entity, pi.itemIndex, pi.clickPoint.x(), pi.clickPoint.y(), pi.P3D); //map straight to pointPicked function
+}
+
+//Process point picks
+void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P)
+{
+    std::cout<<"Item picked!"<<std::endl;
+//    if (!entity) //null pick
+//    {
+//        return;
+//    }
+
+//    //no active tool (i.e. picking mode) - set selected object as active
+//    if (!m_activeTool)
+//    {
+//        m_app->setSelectedInDB(entity, true);
+//        return;
+//    }
+
+//    //find relevant node to add data to
+//    ccHObject* parentNode = getInsertPoint();
+
+//    if (parentNode == nullptr) //could not get insert point for some reason
+//    {
+//        return; //bail
+//    }
+
+//    //ensure what we are writing too is visible (avoids confusion if it is turned off...)
+//    parentNode->setEnabled(true);
+
+//    //call generic "point-picked" function of active tool
+//    m_activeTool->pointPicked(parentNode, itemIdx, entity, P);
+
+//    //have we picked a point cloud?
+//    if (entity->isKindOf(CC_TYPES::POINT_CLOUD))
+//    {
+//        //get point cloud
+//        ccPointCloud* cloud = static_cast<ccPointCloud*>(entity); //cast to point cloud
+
+//        if (!cloud)
+//        {
+//            ccLog::Warning("[Item picking] Shit's fubar (Picked point is not in pickable entities DB?)!");
+//            return;
+//        }
+
+//        //pass picked point, cloud & insert point to relevant tool
+//        m_activeTool->pointPicked(parentNode, itemIdx, cloud, P);
+//    }
+
+//    //redraw
+//    m_app->updateUI();
+//    m_app->getActiveGLWindow()->redraw();
 }
 
 void q3D2DDlg::reproj()
