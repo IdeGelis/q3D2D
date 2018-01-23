@@ -33,6 +33,7 @@
 #include <QString>
 #include <QDir>
 #include <QXmlStreamReader>
+#include <QListWidgetItem>
 
 //qCC
 #include <ccGLWindow.h>
@@ -145,10 +146,17 @@ void q3D2DDlg::reproj()
         std::cout<<coordImgDisto.y<<std::endl;
         std::cout<<images.at(im).calib.szIm.x<<std::endl;
         std::cout<<images.at(im).calib.szIm.y<<std::endl;
-        if (0 <= coordImgDisto.x <= images.at(im).calib.szIm.x && 0 <= coordImgDisto.y <= images.at(im).calib.szIm.y){
-            selectedImgs.push_back(images.at(im));
-            std::cout<<"Img seleted"<<std::endl;
+
+        if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
+            if ( 0 <= coordImgDisto.y && coordImgDisto.y<= images.at(im).calib.szIm.y){
+                selectedImgs.push_back(images.at(im));
+                std::cout<<"Img seleted"<<std::endl;
+                QListWidgetItem *imgItem = new QListWidgetItem;
+                imgItem->setText(images.at(im).name);
+                ui->listImg->addItem(imgItem);
+            }
         }
+
     }
 }
 
