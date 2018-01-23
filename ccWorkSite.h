@@ -22,6 +22,7 @@ public:
     QString pathFolderImg;
     QString pathFolderOriCali;
     std::vector<cc3D2DImage> images;
+    std::vector<cc3D2DImage> selectedImgs;
 };
 
 #endif // CCWORKSITE_H

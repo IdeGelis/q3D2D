@@ -27,6 +27,7 @@
 #include "ui_q3D2Ddlg.h"
 #include "ccPoint.h"
 #include "cc3D2DImage.h"
+#include "q3D2DDisplayImgDlg.h"
 
 //Qt
 #include "qfiledialog.h"
@@ -34,6 +35,7 @@
 #include <QDir>
 #include <QXmlStreamReader>
 #include <QListWidgetItem>
+#include <QImageReader>
 
 //qCC
 #include <ccGLWindow.h>
@@ -110,7 +112,6 @@ void q3D2DDlg::onItemPicked(const ccPickingListener::PickedItem& pi)
 //Process point picks
 void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P)
 {
-    std::cout<<"Item picked!"<<std::endl;
     if (!entity) //null pick
     {
         return;
@@ -124,9 +125,6 @@ void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, co
     this->currentPoint->coord = P;
 
     ui->push_reproj->setEnabled(true);
-//    //redraw
-//    m_app->updateUI();
-//    m_app->getActiveGLWindow()->redraw();
 }
 
 void q3D2DDlg::reproj()
@@ -137,6 +135,7 @@ void q3D2DDlg::reproj()
     images= this->currentWorkSite->images;
 
     std::vector<cc3D2DImage> selectedImgs;
+    bool test = false;
 
     for (int im = 0; im < images.size(); im++){
         std::cout<<images.at(im).name.toStdString()<<std::endl;
@@ -154,37 +153,30 @@ void q3D2DDlg::reproj()
                 QListWidgetItem *imgItem = new QListWidgetItem;
                 imgItem->setText(images.at(im).name);
                 ui->listImg->addItem(imgItem);
+               // ui->listImg->addItem(images.at(im));
+                test = true;
             }
         }
-
+    }
+    // Set the display button able only if there is some images to display.
+    if (test){
+        ui->push_display->setEnabled(true);
+        this->currentWorkSite->selectedImgs = selectedImgs;
     }
 }
 
 void q3D2DDlg::displayImg()
 {
     std::cout<<"Displaying images..."<<std::endl;
+    QList<QListWidgetItem*> selImgs;
+    selImgs = ui->listImg->selectedItems();
+
+    for (int im=0; im<selImgs.size(); im++){
+        int rank = ui->listImg->row(selImgs.at(im));
+//        q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
+//        dlgDispImg->dispImg(this->currentWorkSite->selectedImgs.at(rank));
+//        dlgDispImg->show();
+
+    }
 }
 
-
-//registers this plugin with the picking hub
-//bool q3D2DDlg::startPicking()
-//{
-//    if (m_picking) //already picking... don't need to add again
-//        return true;
-
-//    //activate "point picking mode"
-//    if (!m_app->pickingHub())  //no valid picking hub
-//    {
-//        m_app->dispToConsole("[q3D2D] Could not retrieve valid picking hub. Measurement aborted.", ccMainAppInterface::ERR_CONSOLE_MESSAGE);
-//        return false;
-//    }
-
-//    if (!m_app->pickingHub()->addListener(this, true, true))
-//    {
-//        m_app->dispToConsole("Another tool is already using the picking mechanism. Stop it first", ccMainAppInterface::ERR_CONSOLE_MESSAGE);
-//        return false;
-//    }
-
-//    m_picking = true;
-//    return true;
-//}

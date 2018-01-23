@@ -31,9 +31,10 @@
 
 //Qt
 #include <QImage>
+#include <QPixmap>
 
 cc3D2DImage::cc3D2DImage(QString _path,QString _name,ccOrientation _ori,ccCalibration _cali)
-    :QImage(_path),name(_name), ori(_ori), calib(_cali)
+    :QPixmap(_path),name(_name), ori(_ori), calib(_cali)
 {
 
 }
