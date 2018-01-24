@@ -1,4 +1,6 @@
-
+//System
+#include <math.h>
+#include <typeinfo>
 //3D2D
 #include "q3D2DDisplayImgDlg.h"
 #include "ui_q3D2DDisplayImgDlg.h"
@@ -25,7 +27,17 @@ void q3D2DDisplayImgDlg::dispImg(cc3D2DImage img)
 }
 void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
 {
-    mScene.clear();
+    QSize szIm = img.size();
+    QSize szGraphView = ui->graphicsView->size();
+
+    if (szIm.height()>szIm.width()){
+        double coef = double(szGraphView.height())/double(szIm.height());
+        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
+    }else{
+        double coef = double(szGraphView.width())/double(szIm.width());
+        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
+    }
+
     mScene.addPixmap(img);
 }
 
