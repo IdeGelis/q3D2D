@@ -31,10 +31,7 @@
 #include <QDir>
 #include <QImage>
 
-//ccWorkSite::ccWorkSite(QString _pathFolderImg, QString _pathFolderOriCali)
-//    :pathFolderImg(_pathFolderImg), pathFolderOriCali(_pathFolderOriCali)
-//{
-//}
+
 ccWorkSite::ccWorkSite()
 {
 }
