@@ -182,7 +182,8 @@ void q3D2DDlg::displayImg()
 
 //    }
     q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
-    dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
+    dlgDispImg->dispImgmoi(QPixmap("/home/prof/Documents/Iris/Fontaine/AIMG_2470.JPG"));
+//    dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
     dlgDispImg->show();
 
 }
