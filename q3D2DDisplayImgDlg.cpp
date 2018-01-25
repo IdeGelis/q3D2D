@@ -37,34 +37,34 @@ q3D2DDisplayImgDlg::~q3D2DDisplayImgDlg()
 
 void q3D2DDisplayImgDlg::dispImg(cc3D2DImage img)
 {
-    mScene.clear();
-    mScene.addPixmap(QPixmap(img));
-}
-void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
-{
-    QSize szIm = img.size();
-    QSize szGraphView = ui->graphicsView->size();
 
-
-//    if (szIm.height()>szIm.width()){
-//        double coef = double(szGraphView.height())/double(szIm.height());
-//        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
-//    }else{
-//        double coef = double(szGraphView.width())/double(szIm.width());
-//        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
-//    }
     ui->graphicsView->setBackgroundBrush(QBrush(QColor(0x7F,0x7F,0x7F)));
+    this->setWindowTitle(img.name);
 
     mScene.addPixmap(img);
-    //QPainter *paint;
     QGraphicsItem *item;
     QRectF rect(10.0,10.0,10.0,10.0);
-    //paint->drawEllipse(rect);
-    //ui->graphicsView->drawForeground(paint,rect);
+
     item = mScene.addRect(rect,QPen(QColor(156,0,0)));
 
     // Change the position of the marker
-    item->setPos(50.0,510.0);
+    item->setPos(img.ptSelected.x-5.0,img.ptSelected.y-5.0);
+
+}
+void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
+{
+    float x= 200.1;
+    float y = 400.5;
+
+    ui->graphicsView->setBackgroundBrush(QBrush(QColor(0x7F,0x7F,0x7F)));
+    mScene.addPixmap(img);
+    QGraphicsItem *item;
+    QRectF rect(10.0,10.0,10.0,10.0);
+
+    item = mScene.addRect(rect,QPen(QColor(156,0,0)));
+
+    // Change the position of the marker
+    item->setPos(x-5.0,y-5.0);
 }
 
 #ifndef QT_NO_WHEELEVENT

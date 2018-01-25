@@ -168,20 +168,20 @@ void q3D2DDlg::reproj()
 void q3D2DDlg::displayImg()
 {
     std::cout<<"Displaying images..."<<std::endl;
-//    QList<QListWidgetItem*> selImgs;
-//    selImgs = ui->listImg->selectedItems();
+    QList<QListWidgetItem*> selImgs;
+    selImgs = ui->listImg->selectedItems();
 
-//    for (int im=0; im<selImgs.size(); im++){
-//        int rank = ui->listImg->row(selImgs.at(im));
-//        q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
-//        dlgDispImg->dispImg(this->currentWorkSite->selectedImgs.at(rank));
-//        dlgDispImg->show();
+    for (int im=0; im<selImgs.size(); im++){
+        int rank = ui->listImg->row(selImgs.at(im));
+        q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
+        dlgDispImg->dispImg(this->currentWorkSite->selectedImgs.at(rank));
+        dlgDispImg->show();
 
-//    }
-    q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
+    }
+    //q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
     //dlgDispImg->dispImgmoi(QPixmap("/home/prof/Documents/Iris/Fontaine/AIMG_2470.JPG"));
-    dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
-    dlgDispImg->show();
+    //dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
+    //dlgDispImg->show();
 
 }
 
