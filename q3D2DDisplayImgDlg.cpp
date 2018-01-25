@@ -10,8 +10,15 @@ q3D2DDisplayImgDlg::q3D2DDisplayImgDlg(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::q3D2DDisplayImgDlg)
 {
+    // Set default zoom factors
+    zoomFactor=DEFAULT_ZOOM_FACTOR;
+    zoomCtrlFactor=DEFAULT_ZOOM_CTRL_FACTOR;
+
     ui->setupUi(this);
     ui->graphicsView->setScene(&mScene);
+//    ui->graphicsView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+//    ui->graphicsView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+
 }
 
 q3D2DDisplayImgDlg::~q3D2DDisplayImgDlg()
@@ -30,15 +37,58 @@ void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
     QSize szIm = img.size();
     QSize szGraphView = ui->graphicsView->size();
 
-    if (szIm.height()>szIm.width()){
-        double coef = double(szGraphView.height())/double(szIm.height());
-        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
-    }else{
-        double coef = double(szGraphView.width())/double(szIm.width());
-        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
-    }
+//    if (szIm.height()>szIm.width()){
+//        double coef = double(szGraphView.height())/double(szIm.height());
+//        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
+//    }else{
+//        double coef = double(szGraphView.width())/double(szIm.width());
+//        img = img.scaled(szIm.width()*coef, szIm.height()*coef);
+//    }
 
     mScene.addPixmap(img);
+}
+
+#ifndef QT_NO_WHEELEVENT
+
+// Call when there is a scroll event (zoom in or zoom out)
+void q3D2DDisplayImgDlg::wheelEvent(QWheelEvent *event)
+{
+    // When zooming, the view stay centered over the mouse
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+
+    double factor = (event->modifiers() & Qt::ControlModifier) ? zoomCtrlFactor : zoomFactor;
+    if(event->delta() > 0)
+        // Zoom in
+        ui->graphicsView->scale(factor, factor);
+    else
+        // Zooming out
+        ui->graphicsView->scale(1.0 / factor, 1.0 / factor);
+
+    // The event is processed
+    event->accept();
+}
+
+#endif
+// Called when a mouse button is pressed
+void q3D2DDisplayImgDlg::mousePressEvent(QMouseEvent *event)
+{
+    // Drag mode : change the cursor's shape
+    if (event->button() == Qt::LeftButton){
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    }
+    //    if (event->button() == Qt::RightButton) this->fitImage();
+    //QGraphicsView::mousePressEvent(event);
+}
+
+
+// Called when a mouse button is pressed
+void q3D2DDisplayImgDlg::mouseReleaseEvent(QMouseEvent *event)
+{
+    // Exit drag mode : change the cursor's shape
+    if (event->button() == Qt::LeftButton){
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+    }
+    //QGraphicsView::mouseReleaseEvent(event);
 }
 
 //void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)

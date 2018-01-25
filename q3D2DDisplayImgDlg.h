@@ -18,6 +18,12 @@
 //system
 #include <iostream>
 
+
+// Default zoom factors
+#define         DEFAULT_ZOOM_FACTOR             1.15
+#define         DEFAULT_ZOOM_CTRL_FACTOR        1.01
+
+
 namespace Ui {
 class q3D2DDisplayImgDlg;
 }
@@ -36,6 +42,17 @@ public:
 private:
     Ui::q3D2DDisplayImgDlg *ui;
     QGraphicsScene mScene;
+
+    // Zoom factor
+    double zoomFactor;
+
+    // Zoom factor when the CTRL key is pressed
+    double zoomCtrlFactor;
+protected:
+    void wheelEvent(QWheelEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
 
 //public:
 //    /*!
