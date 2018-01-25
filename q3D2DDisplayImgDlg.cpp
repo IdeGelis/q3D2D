@@ -1,6 +1,10 @@
 //System
 #include <math.h>
 #include <typeinfo>
+
+//Qt
+#include <QPainter>
+#include <QRectF>
 //3D2D
 #include "q3D2DDisplayImgDlg.h"
 #include "ui_q3D2DDisplayImgDlg.h"
@@ -37,8 +41,17 @@ void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
         double coef = double(szGraphView.width())/double(szIm.width());
         img = img.scaled(szIm.width()*coef, szIm.height()*coef);
     }
-
+    ui->graphicsView->setBackgroundBrush(QBrush(QColor(0x7F,0x7F,0x7F)));
     mScene.addPixmap(img);
+    //QPainter *paint;
+    QGraphicsItem *item;
+    QRectF rect(10.0,10.0,10.0,10.0);
+    //paint->drawEllipse(rect);
+    //ui->graphicsView->drawForeground(paint,rect);
+    item = mScene.addRect(rect,QPen(QColor(156,0,0)));
+
+    // Change the position of the marker
+    item->setPos(50.0,510.0);
 }
 
 //void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
