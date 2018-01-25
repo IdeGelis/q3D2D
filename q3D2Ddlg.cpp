@@ -144,10 +144,7 @@ void q3D2DDlg::reproj()
         std::cout<<images.at(im).name.toStdString()<<std::endl;
         CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
         CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
-        std::cout<<coordImgDisto.x<<std::endl;
-        std::cout<<coordImgDisto.y<<std::endl;
-        std::cout<<images.at(im).calib.szIm.x<<std::endl;
-        std::cout<<images.at(im).calib.szIm.y<<std::endl;
+        images.at(im).ptSelected = coordImgDisto;
 
         if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
             if ( 0 <= coordImgDisto.y && coordImgDisto.y<= images.at(im).calib.szIm.y){
@@ -182,8 +179,8 @@ void q3D2DDlg::displayImg()
 
 //    }
     q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
-    dlgDispImg->dispImgmoi(QPixmap("/home/prof/Documents/Iris/Fontaine/AIMG_2470.JPG"));
-//    dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
+    //dlgDispImg->dispImgmoi(QPixmap("/home/prof/Documents/Iris/Fontaine/AIMG_2470.JPG"));
+    dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
     dlgDispImg->show();
 
 }

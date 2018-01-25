@@ -42,12 +42,15 @@ public:
 private:
     Ui::q3D2DDisplayImgDlg *ui;
     QGraphicsScene mScene;
-
     // Zoom factor
     double zoomFactor;
-
     // Zoom factor when the CTRL key is pressed
     double zoomCtrlFactor;
+
+private slots:
+    void zoom_out();
+    void zoom_in();
+
 protected:
     void wheelEvent(QWheelEvent *event);
     void mousePressEvent(QMouseEvent *event);

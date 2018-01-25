@@ -34,6 +34,9 @@ public:
     ccOrientation ori;
     CCVector3 vectVisee;
 
+    //Coordinates of the selected point in this image
+    CCVector2 ptSelected;
+
 
     CCVector2 formuleImg(ccPoint point);
     CCVector2 addDisto(CCVector2 coordIm);
