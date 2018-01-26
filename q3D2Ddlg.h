@@ -34,7 +34,7 @@ private:
     Ui::q3D2DDlg *ui;
     ccWorkSite *currentWorkSite;
     ccPoint *currentPoint;
-
+    ccPickingHub* m_pickingHub;
 
 
 public slots:

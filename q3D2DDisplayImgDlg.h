@@ -36,7 +36,7 @@ public:
     explicit q3D2DDisplayImgDlg(QWidget *parent = 0);
     ~q3D2DDisplayImgDlg();
     void dispImg(cc3D2DImage img);
-    void dispImgmoi(QPixmap img);
+
 
 
 private:

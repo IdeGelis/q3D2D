@@ -100,9 +100,11 @@ void q3D2DDlg::selectPt()
     std::cout<<"Selecting mode"<<std::endl;
     //http://www.cloudcompare.org/forum/viewtopic.php?t=514
     //std::cout<<typeid(this->app).name()<<std::endl;
-    ccPickingHub* m_pickingHub = this->m_app->pickingHub();
+    this->m_pickingHub = this->m_app->pickingHub();
+
     //m_pickingHub->togglePickingMode(true);
-    m_pickingHub->addListener(this,true,true);
+    this->m_pickingHub->addListener(this,true,true);
+
 }
 
 //This function is called when a point is picked (through the picking hub)
@@ -128,17 +130,23 @@ void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, co
     this->currentPoint->coord = P;
 
     ui->push_reproj->setEnabled(true);
+
+    if(ui->checkBox_autoReproj->checkState() == Qt::Checked){
+        this->reproj();
+    }
 }
 
 void q3D2DDlg::reproj()
 {
-    std::cout<<"Reprojection..."<<std::endl;
+    //std::cout<<"Reprojection..."<<std::endl;
 
+    this->m_pickingHub->removeListener(this);
     std::vector<cc3D2DImage> images;
     images= this->currentWorkSite->images;
 
     std::vector<cc3D2DImage> selectedImgs;
     bool test = false;
+    ui->listImg->clear();
 
     for (int im = 0; im < images.size(); im++){
         std::cout<<images.at(im).name.toStdString()<<std::endl;
@@ -153,7 +161,6 @@ void q3D2DDlg::reproj()
                 QListWidgetItem *imgItem = new QListWidgetItem;
                 imgItem->setText(images.at(im).name);
                 ui->listImg->addItem(imgItem);
-               // ui->listImg->addItem(images.at(im));
                 test = true;
             }
         }
@@ -167,7 +174,7 @@ void q3D2DDlg::reproj()
 
 void q3D2DDlg::displayImg()
 {
-    std::cout<<"Displaying images..."<<std::endl;
+    //std::cout<<"Displaying images..."<<std::endl;
     QList<QListWidgetItem*> selImgs;
     selImgs = ui->listImg->selectedItems();
 

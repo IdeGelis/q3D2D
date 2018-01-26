@@ -44,28 +44,18 @@ void q3D2DDisplayImgDlg::dispImg(cc3D2DImage img)
     mScene.addPixmap(img);
     QGraphicsItem *item;
     QRectF rect(10.0,10.0,10.0,10.0);
-
-    item = mScene.addRect(rect,QPen(QColor(156,0,0)));
+    QPen pen;
+    pen.setWidth(3);
+    pen.setBrush(QColor(156,0,0));
+    pen.setJoinStyle(Qt::RoundJoin);
+    item = mScene.addRect(rect,pen);
 
     // Change the position of the marker
     item->setPos(img.ptSelected.x-5.0,img.ptSelected.y-5.0);
+    ui->graphicsView->centerOn(img.ptSelected.x,img.ptSelected.y);
 
 }
-void q3D2DDisplayImgDlg::dispImgmoi(QPixmap img)
-{
-    float x= 200.1;
-    float y = 400.5;
 
-    ui->graphicsView->setBackgroundBrush(QBrush(QColor(0x7F,0x7F,0x7F)));
-    mScene.addPixmap(img);
-    QGraphicsItem *item;
-    QRectF rect(10.0,10.0,10.0,10.0);
-
-    item = mScene.addRect(rect,QPen(QColor(156,0,0)));
-
-    // Change the position of the marker
-    item->setPos(x-5.0,y-5.0);
-}
 
 #ifndef QT_NO_WHEELEVENT
 
