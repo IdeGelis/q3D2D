@@ -147,11 +147,44 @@ void q3D2DDlg::reproj()
     std::vector<cc3D2DImage> selectedImgs;
     bool test = false;
     ui->listImg->clear();
-
+    std::cout<<"Distorsion coefs"<<std::endl;
+    std::cout<<images.at(0).calib.distorsionCoefs.x<<std::endl;
+    std::cout<<images.at(0).calib.distorsionCoefs.y<<std::endl;
+    std::cout<<images.at(0).calib.distorsionCoefs[2]<<std::endl;
     for (int im = 0; im < images.size(); im++){
+        std::cout<<"\n"<<std::endl;
         std::cout<<images.at(im).name.toStdString()<<std::endl;
+
+        std::cout<<"Rotation"<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(0,0)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(0,1)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(0,2)<<std::endl;
+
+        std::cout<<images.at(im).ori.rotation.getValue(1,0)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(1,1)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(1,2)<<std::endl;
+
+        std::cout<<images.at(im).ori.rotation.getValue(2,0)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(2,1)<<std::endl;
+        std::cout<<images.at(im).ori.rotation.getValue(2,2)<<std::endl;
+
+        std::cout<<"Sommet de prive de vue:"<<std::endl;
+        std::cout<<images.at(im).ori.sommetPdV.x<<std::endl;
+        std::cout<<images.at(im).ori.sommetPdV.y<<std::endl;
+        std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
+
+
         CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
+        std::cout<<"Coord R du pt"<<std::endl;
+        std::cout<<this->currentPoint->coord.x<<std::endl;
+        std::cout<<this->currentPoint->coord.y<<std::endl;
+        std::cout<<this->currentPoint->coord.z<<std::endl;
+        std::cout<< "Resultat formule image: "<<std::endl;
+        std::cout<<coordImg.x<<coordImg.y<<std::endl;
         CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
+        std::cout<< "Resultat +disto: "<<std::endl;
+        std::cout<<coordImgDisto.x<<coordImgDisto.y<<std::endl;
+
         images.at(im).ptSelected = coordImgDisto;
 
         if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
