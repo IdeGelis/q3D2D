@@ -55,7 +55,7 @@ q3D2DDlg::q3D2DDlg(QWidget *parent) :
 
     this->currentPoint = new ccPoint();
 
-    ui->push_display->setEnabled(true);
+    ui->push_reproj->setEnabled(true);
 
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
@@ -140,7 +140,7 @@ void q3D2DDlg::reproj()
 {
     //std::cout<<"Reprojection..."<<std::endl;
 
-    this->m_pickingHub->removeListener(this);
+    //this->m_pickingHub->removeListener(this);
     std::vector<cc3D2DImage> images;
     images= this->currentWorkSite->images;
 
@@ -150,7 +150,24 @@ void q3D2DDlg::reproj()
     std::cout<<"Distorsion coefs"<<std::endl;
     std::cout<<images.at(0).calib.distorsionCoefs.x<<std::endl;
     std::cout<<images.at(0).calib.distorsionCoefs.y<<std::endl;
-    std::cout<<images.at(0).calib.distorsionCoefs[2]<<std::endl;
+    std::cout<<images.at(0).calib.distorsionCoefs.z<<std::endl;
+
+    std::cout<<"PPS"<<std::endl;
+    std::cout<<images.at(1).calib.pps.x<<std::endl;
+    std::cout<<images.at(1).calib.pps.y<<std::endl;
+
+    std::cout<<"Focale"<<std::endl;
+    std::cout<<images.at(2).calib.focale<<std::endl;
+
+    ccPoint ptTest;
+    CCVector3 coord;
+    coord.x = 7.16786;
+    coord.y = 2.85712;
+    coord.z = -21.829;
+    ptTest.coord = coord;
+
+
+
     for (int im = 0; im < images.size(); im++){
         std::cout<<"\n"<<std::endl;
         std::cout<<images.at(im).name.toStdString()<<std::endl;
@@ -174,11 +191,16 @@ void q3D2DDlg::reproj()
         std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
 
 
-        CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
+        //CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
+
+        CCVector2 coordImg = images.at(im).formuleImg(ptTest);
         std::cout<<"Coord R du pt"<<std::endl;
-        std::cout<<this->currentPoint->coord.x<<std::endl;
-        std::cout<<this->currentPoint->coord.y<<std::endl;
-        std::cout<<this->currentPoint->coord.z<<std::endl;
+//        std::cout<<this->currentPoint->coord.x<<std::endl;
+//        std::cout<<this->currentPoint->coord.y<<std::endl;
+//        std::cout<<this->currentPoint->coord.z<<std::endl;
+        std::cout<<ptTest.coord.x<<std::endl;
+        std::cout<<ptTest.coord.y<<std::endl;
+        std::cout<<ptTest.coord.z<<std::endl;
         std::cout<< "Resultat formule image: "<<std::endl;
         std::cout<<coordImg.x<<coordImg.y<<std::endl;
         CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);

@@ -70,7 +70,13 @@ CCVector2 cc3D2DImage::formuleImg(ccPoint point)
     CCVector3 tmp;
 
     // R*(pt - SPdV)
-    tmp = multiply(this->ori.rotation, point.coord - this->ori.sommetPdV);
+    tmp = point.coord - this->ori.sommetPdV;
+    std::cout<<"pt - S"<<std::endl;
+    std::cout<<tmp.x<<std::endl;
+    std::cout<<tmp.y<<std::endl;
+    std::cout<<tmp.z<<std::endl;
+
+    tmp = multiply(this->ori.rotation.transposed(), tmp);
 
     std::cout <<"R*(pt-SPdV)"<<std::endl;
     std::cout<<tmp.x<<std::endl;
