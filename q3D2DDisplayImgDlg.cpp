@@ -22,11 +22,7 @@ q3D2DDisplayImgDlg::q3D2DDisplayImgDlg(QWidget *parent) :
     ui->graphicsView->setScene(&mScene);
     QObject::connect(ui->zoom_in,SIGNAL(released()),this,SLOT(zoom_in()));
     QObject::connect(ui->zoom_out,SIGNAL(released()),this,SLOT(zoom_out()));
-
-
-//    ui->graphicsView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-//    ui->graphicsView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-
+    QObject::connect(ui->checkBox_marker,SIGNAL(stateChanged()),this,SLOT(markerOff(img)));
 }
 
 q3D2DDisplayImgDlg::~q3D2DDisplayImgDlg()
@@ -54,8 +50,12 @@ void q3D2DDisplayImgDlg::dispImg(cc3D2DImage img)
     item->setPos(img.ptSelected.x-5.0,img.ptSelected.y-5.0);
     ui->graphicsView->centerOn(img.ptSelected.x,img.ptSelected.y);
 
-}
 
+}
+void q3D2DDisplayImgDlg::markerOff(cc3D2DImage img)
+{
+    std::cout<<"hey!!"<<std::endl;
+}
 
 #ifndef QT_NO_WHEELEVENT
 

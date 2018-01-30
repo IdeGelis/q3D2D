@@ -50,6 +50,7 @@ private:
 private slots:
     void zoom_out();
     void zoom_in();
+    void markerOff(cc3D2DImage img);
 
 protected:
     void wheelEvent(QWheelEvent *event);

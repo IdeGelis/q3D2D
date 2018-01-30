@@ -40,9 +40,8 @@ ccOrientation xmlToOri(QString filePath)
 {
     // xmlToOri is able to read an xml of orientation and to return a ccOrientation object
     // made of this orientation file
-    std::cout<<"Reading Xml"<<std::endl;
+    //std::cout<<"Reading Xml"<<std::endl;
 
-    // QXmlStreamReader oriFile = QXmlStreamReader(oriFiles.at(i));cc
     QFile file(filePath);
 
     if(!file.open(QFile::ReadOnly | QFile::Text)){
@@ -126,19 +125,8 @@ ccOrientation xmlToOri(QString filePath)
 
     //Place the orientation parametters in the right type
     QStringList centreCoord = centre.split(' ');
-    std::cout.precision(16);
+    std::cout.precision(18);
 
-    std::cout<<"STRING"<<std::endl;
-    std::cout<<centreCoord.at(0).toStdString()<<std::endl;
-    std::cout<<"Stod"<<std::endl;
-    std::cout<<std::stod(centreCoord.at(0).toStdString())<<std::endl;
-    std::cout<<"stold"<<std::endl;
-    std::cout<<std::stold(centreCoord.at(0).toStdString())<<std::endl;
-    std::cout<<"float"<<std::endl;
-    std::cout<<centreCoord.at(0).toFloat()<<std::endl;
-    std::cout<<"double"<<std::endl;
-    std::cout<<centreCoord.at(0).toDouble()<<std::endl;
-    //Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toFloat(),centreCoord.at(1).toFloat(),centreCoord.at(2).toFloat());
     CCVector3 sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
 
     CCLib::SquareMatrixd rotation(3);
@@ -166,7 +154,7 @@ ccCalibration xmlToCali(QString filePath)
 {
     // xmlToOri is able to read an xml of orientation and to return a ccOrientation object
     // made of this orientation file
-    std::cout<<"Reading Xml"<<std::endl;
+    //std::cout<<"Reading Xml"<<std::endl;
 
     // QXmlStreamReader oriFile = QXmlStreamReader(oriFiles.at(i));cc
     QFile file(filePath);
@@ -269,10 +257,6 @@ ccCalibration xmlToCali(QString filePath)
     CCVector2 ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
 
     CCVector3 coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
-
-    std::cout<<coefDisto.x<<std::endl;
-    std::cout<<coefDisto.y<<std::endl;
-    std::cout<<coefDisto.z<<std::endl;
     ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
     return cali;
 
