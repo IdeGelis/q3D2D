@@ -18,6 +18,7 @@
 //System
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 //3D2D
 #include "ccOrientation.h"
@@ -125,6 +126,18 @@ ccOrientation xmlToOri(QString filePath)
 
     //Place the orientation parametters in the right type
     QStringList centreCoord = centre.split(' ');
+    std::cout.precision(16);
+
+    std::cout<<"STRING"<<std::endl;
+    std::cout<<centreCoord.at(0).toStdString()<<std::endl;
+    std::cout<<"Stod"<<std::endl;
+    std::cout<<std::stod(centreCoord.at(0).toStdString())<<std::endl;
+    std::cout<<"stold"<<std::endl;
+    std::cout<<std::stold(centreCoord.at(0).toStdString())<<std::endl;
+    std::cout<<"float"<<std::endl;
+    std::cout<<centreCoord.at(0).toFloat()<<std::endl;
+    std::cout<<"double"<<std::endl;
+    std::cout<<centreCoord.at(0).toDouble()<<std::endl;
     //Vector3Tpl<double> sommetPriseVue(centreCoord.at(0).toFloat(),centreCoord.at(1).toFloat(),centreCoord.at(2).toFloat());
     CCVector3 sommetPriseVue(centreCoord.at(0).toDouble(),centreCoord.at(1).toDouble(),centreCoord.at(2).toDouble());
 
@@ -132,15 +145,15 @@ ccOrientation xmlToOri(QString filePath)
 
     QStringList l1List = l1.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(0,i,l1List.at(i).toFloat());
+        rotation.setValue(0,i,l1List.at(i).toDouble());
     }
     QStringList l2List = l2.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(1,i,l2List.at(i).toFloat());
+        rotation.setValue(1,i,l2List.at(i).toDouble());
     }
     QStringList l3List = l3.split(' ');
     for (int i=0;i<3;i++){
-        rotation.setValue(2,i,l3List.at(i).toFloat());
+        rotation.setValue(2,i,l3List.at(i).toDouble());
     }
 
     //Create the ccOrientation object
@@ -192,16 +205,26 @@ ccCalibration xmlToCali(QString filePath)
                         else if(reader.name() == "CalibDistortion"){
                             while(reader.readNextStartElement()){
                                 if(reader.name() == "ModRad"){
+                                    int cpt = 1;
                                     while(reader.readNextStartElement()){
+                                        std::cout<<reader.name().toString().toStdString()<<std::endl;
+
                                         if(reader.name() == "CDist"){
                                             pps = reader.readElementText();
                                         }
-                                        else if(reader.name() == "CoeffDist"){
+                                        else if(reader.name() == "CoeffDist" && cpt == 1){
                                             distorsionCoefs1 = reader.readElementText();
-                                            reader.skipCurrentElement();
+                                            cpt +=1;
+                                        }
+                                        else if(reader.name() == "CoeffDist" && cpt == 2){
+
                                             distorsionCoefs2 = reader.readElementText();
-                                            reader.skipCurrentElement();
+                                            cpt +=1;
+                                        }
+                                        else if(reader.name() == "CoeffDist" && cpt == 3){
+
                                             distorsionCoefs3 = reader.readElementText();
+                                            cpt +=1;
                                         }
                                         else
                                             reader.skipCurrentElement();
@@ -240,16 +263,16 @@ ccCalibration xmlToCali(QString filePath)
     double foc = focale.toDouble();
 
     QStringList szImList = sizeImg.split(' ');
-//    Vector2Tpl<int> szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
     CCVector2 szIm(szImList.at(0).toInt(), szImList.at(1).toInt());
 
     QStringList ppsCoord = pps.split(' ');
-//    Vector2Tpl<double> ppsVect(ppsCoord.at(0).toFloat(), ppsCoord.at(1).toFloat());
     CCVector2 ppsVect(ppsCoord.at(0).toDouble(), ppsCoord.at(1).toDouble());
 
-    //Vector3Tpl<double> coefDisto(distorsionCoefs1.toFloat(),distorsionCoefs2.toFloat(),distorsionCoefs3.toFloat());
     CCVector3 coefDisto(distorsionCoefs1.toDouble(),distorsionCoefs2.toDouble(),distorsionCoefs3.toDouble());
 
+    std::cout<<coefDisto.x<<std::endl;
+    std::cout<<coefDisto.y<<std::endl;
+    std::cout<<coefDisto.z<<std::endl;
     ccCalibration cali(ppaVect,ppsVect,foc,szIm,coefDisto);
     return cali;
 

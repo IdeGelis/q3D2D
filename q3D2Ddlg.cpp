@@ -28,7 +28,6 @@
 #include "ccPoint.h"
 #include "cc3D2DImage.h"
 #include "q3D2DDisplayImgDlg.h"
-#include "q3D2DDispIm.h"
 
 //Qt
 #include "qfiledialog.h"
