@@ -54,7 +54,6 @@ q3D2DDlg::q3D2DDlg(QWidget *parent) :
 
     this->currentPoint = new ccPoint();
 
-    ui->push_reproj->setEnabled(true);
 
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
@@ -146,24 +145,24 @@ void q3D2DDlg::reproj()
     std::vector<cc3D2DImage> selectedImgs;
     bool test = false;
     ui->listImg->clear();
-    std::cout<<"Distorsion coefs"<<std::endl;
-    std::cout<<images.at(0).calib.distorsionCoefs.x<<std::endl;
-    std::cout<<images.at(0).calib.distorsionCoefs.y<<std::endl;
-    std::cout<<images.at(0).calib.distorsionCoefs.z<<std::endl;
+//    std::cout<<"Distorsion coefs"<<std::endl;
+//    std::cout<<images.at(0).calib.distorsionCoefs.x<<std::endl;
+//    std::cout<<images.at(0).calib.distorsionCoefs.y<<std::endl;
+//    std::cout<<images.at(0).calib.distorsionCoefs.z<<std::endl;
 
-    std::cout<<"PPS"<<std::endl;
-    std::cout<<images.at(1).calib.pps.x<<std::endl;
-    std::cout<<images.at(1).calib.pps.y<<std::endl;
+//    std::cout<<"PPS"<<std::endl;
+//    std::cout<<images.at(1).calib.pps.x<<std::endl;
+//    std::cout<<images.at(1).calib.pps.y<<std::endl;
 
-    std::cout<<"Focale"<<std::endl;
-    std::cout<<images.at(2).calib.focale<<std::endl;
+//    std::cout<<"Focale"<<std::endl;
+//    std::cout<<images.at(2).calib.focale<<std::endl;
 
-    ccPoint ptTest;
-    CCVector3 coord;
-    coord.x = 7.16786;
-    coord.y = 2.85712;
-    coord.z = -21.829;
-    ptTest.coord = coord;
+//    ccPoint ptTest;
+//    CCVector3 coord;
+//    coord.x = 7.16786;
+//    coord.y = 2.85712;
+//    coord.z = -21.829;
+//    ptTest.coord = coord;
 
 
 
@@ -171,40 +170,36 @@ void q3D2DDlg::reproj()
         std::cout<<"\n"<<std::endl;
         std::cout<<images.at(im).name.toStdString()<<std::endl;
 
-        std::cout<<"Rotation"<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(0,0)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(0,1)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(0,2)<<std::endl;
+//        std::cout<<"Rotation"<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(0,0)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(0,1)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(0,2)<<std::endl;
 
-        std::cout<<images.at(im).ori.rotation.getValue(1,0)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(1,1)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(1,2)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(1,0)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(1,1)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(1,2)<<std::endl;
 
-        std::cout<<images.at(im).ori.rotation.getValue(2,0)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(2,1)<<std::endl;
-        std::cout<<images.at(im).ori.rotation.getValue(2,2)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(2,0)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(2,1)<<std::endl;
+//        std::cout<<images.at(im).ori.rotation.getValue(2,2)<<std::endl;
 
-        std::cout<<"Sommet de prive de vue:"<<std::endl;
-        std::cout<<images.at(im).ori.sommetPdV.x<<std::endl;
-        std::cout<<images.at(im).ori.sommetPdV.y<<std::endl;
-        std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
+//        std::cout<<"Sommet de prive de vue:"<<std::endl;
+//        std::cout<<images.at(im).ori.sommetPdV.x<<std::endl;
+//        std::cout<<images.at(im).ori.sommetPdV.y<<std::endl;
+//        std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
 
 
-        //CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
+        CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
 
-        CCVector2 coordImg = images.at(im).formuleImg(ptTest);
-        std::cout<<"Coord R du pt"<<std::endl;
-//        std::cout<<this->currentPoint->coord.x<<std::endl;
-//        std::cout<<this->currentPoint->coord.y<<std::endl;
-//        std::cout<<this->currentPoint->coord.z<<std::endl;
-        std::cout<<ptTest.coord.x<<std::endl;
-        std::cout<<ptTest.coord.y<<std::endl;
-        std::cout<<ptTest.coord.z<<std::endl;
-        std::cout<< "Resultat formule image: "<<std::endl;
-        std::cout<<coordImg.x<<coordImg.y<<std::endl;
+
+//        std::cout<<ptTest.coord.x<<std::endl;
+//        std::cout<<ptTest.coord.y<<std::endl;
+//        std::cout<<ptTest.coord.z<<std::endl;
+//        std::cout<< "Resultat formule image: "<<std::endl;
+//        std::cout<<coordImg.x<<coordImg.y<<std::endl;
         CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
-        std::cout<< "Resultat +disto: "<<std::endl;
-        std::cout<<coordImgDisto.x<<coordImgDisto.y<<std::endl;
+//        std::cout<< "Resultat +disto: "<<std::endl;
+//        std::cout<<coordImgDisto.x<<coordImgDisto.y<<std::endl;
 
         images.at(im).ptSelected = coordImgDisto;
 
@@ -239,10 +234,5 @@ void q3D2DDlg::displayImg()
         dlgDispImg->show();
 
     }
-    //q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
-    //dlgDispImg->dispImgmoi(QPixmap("/home/prof/Documents/Iris/Fontaine/AIMG_2470.JPG"));
-    //dlgDispImg->dispImgmoi(QPixmap("/home/iris/Documents/PPMD/ProjetInfo/Fontaine/AIMG_2470.JPG"));
-    //dlgDispImg->show();
-
 }
 
