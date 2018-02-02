@@ -20,6 +20,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
+#include "math.h"
 
 //3D2D
 #include "ccWorkSite.h"
@@ -42,6 +43,7 @@
 #include "ccPickingHub.h"
 #include "ccMainAppInterface.h"
 #include "ccPickingListener.h"
+#include "ccPointCloud.h"
 
 
 q3D2DDlg::q3D2DDlg(QWidget *parent) :
@@ -53,6 +55,7 @@ q3D2DDlg::q3D2DDlg(QWidget *parent) :
     this->currentWorkSite = new ccWorkSite();
 
     this->currentPoint = new ccPoint();
+    ui->push_slctPt->setEnabled(true);
 
 
     //Connexion of butons
@@ -108,12 +111,21 @@ void q3D2DDlg::selectPt()
 //This function is called when a point is picked (through the picking hub)
 void q3D2DDlg::onItemPicked(const ccPickingListener::PickedItem& pi)
 {
+    CCVector3 normal = CCVector3(0,0,0);
+    if (pi.entity->isKindOf(CC_TYPES::POINT_CLOUD))
+    {
+        //get point cloud
+        ccPointCloud* cloud = static_cast<ccPointCloud*>(pi.entity); //cast to point cloud
 
-    pointPicked(pi.entity, pi.itemIndex, pi.clickPoint.x(), pi.clickPoint.y(), pi.P3D); //map straight to pointPicked function
+        normal = cloud->getPointNormal(pi.itemIndex);
+
+    }
+
+    pointPicked(pi.entity, pi.itemIndex, pi.clickPoint.x(), pi.clickPoint.y(), pi.P3D, normal); //map straight to pointPicked function
 }
 
 //Process point picks
-void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P)
+void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P, CCVector3 N)
 {
     if (!entity) //null pick
     {
@@ -126,8 +138,12 @@ void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, co
 
 
     this->currentPoint->coord = P;
+    this->currentPoint->normal = N;
 
     ui->push_reproj->setEnabled(true);
+
+
+
 
     if(ui->checkBox_autoReproj->checkState() == Qt::Checked){
         this->reproj();
@@ -187,30 +203,28 @@ void q3D2DDlg::reproj()
 //        std::cout<<images.at(im).ori.sommetPdV.x<<std::endl;
 //        std::cout<<images.at(im).ori.sommetPdV.y<<std::endl;
 //        std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
+        //std::cout<<images.at(im).vectVisee.x<<" "<<images.at(im).vectVisee.y<<" "<<images.at(im).vectVisee.z<<std::endl;
+        std::cout<<acos(images.at(im).vectVisee.dot(this->currentPoint->normal))<<std::endl;
+        //std::cout<<images.at(im).vectVisee.norm()<<std::endl;
+        //std::cout<<images.at(im).vectVisee.dot(this->currentPoint->normal)/images.at(im).vectVisee.norm()<<std::endl;
 
 
-        CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
 
+        if (acos(images.at(im).vectVisee.dot(this->currentPoint->normal))>M_PI/2){
+            CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
+            CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
 
-//        std::cout<<ptTest.coord.x<<std::endl;
-//        std::cout<<ptTest.coord.y<<std::endl;
-//        std::cout<<ptTest.coord.z<<std::endl;
-//        std::cout<< "Resultat formule image: "<<std::endl;
-//        std::cout<<coordImg.x<<coordImg.y<<std::endl;
-        CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
-//        std::cout<< "Resultat +disto: "<<std::endl;
-//        std::cout<<coordImgDisto.x<<coordImgDisto.y<<std::endl;
+            images.at(im).ptSelected = coordImgDisto;
 
-        images.at(im).ptSelected = coordImgDisto;
-
-        if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
-            if ( 0 <= coordImgDisto.y && coordImgDisto.y<= images.at(im).calib.szIm.y){
-                selectedImgs.push_back(images.at(im));
-                std::cout<<"Img seleted"<<std::endl;
-                QListWidgetItem *imgItem = new QListWidgetItem;
-                imgItem->setText(images.at(im).name);
-                ui->listImg->addItem(imgItem);
-                test = true;
+            if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
+                if ( 0 <= coordImgDisto.y && coordImgDisto.y<= images.at(im).calib.szIm.y){
+                    selectedImgs.push_back(images.at(im));
+                    std::cout<<"Img seleted"<<std::endl;
+                    QListWidgetItem *imgItem = new QListWidgetItem;
+                    imgItem->setText(images.at(im).name);
+                    ui->listImg->addItem(imgItem);
+                    test = true;
+                }
             }
         }
     }

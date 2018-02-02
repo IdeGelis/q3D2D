@@ -195,7 +195,6 @@ ccCalibration xmlToCali(QString filePath)
                                 if(reader.name() == "ModRad"){
                                     int cpt = 1;
                                     while(reader.readNextStartElement()){
-                                        std::cout<<reader.name().toString().toStdString()<<std::endl;
 
                                         if(reader.name() == "CDist"){
                                             pps = reader.readElementText();

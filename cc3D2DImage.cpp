@@ -52,13 +52,17 @@ void cc3D2DImage::setVectVisee()
     tmp = this->calib.ppa*(1/this->calib.focale) - this->calib.ppa;
 
     //PI(-1)
-    coordPpaWorkSiteFrame.z = this->ori.sommetPdV.z + 1;
+    coordPpaWorkSiteFrame.z = this->ori.sommetPdV.z + 1.0;
     coordPpaWorkSiteFrame.x = coordPpaWorkSiteFrame.z * tmp.x;
     coordPpaWorkSiteFrame.y = coordPpaWorkSiteFrame.z * tmp.y;
     //coordPpaWorkSiteFrame.u;
-    coordPpaWorkSiteFrame = multiply((this->ori.rotation.inv()),coordPpaWorkSiteFrame) + this->ori.sommetPdV;
+    coordPpaWorkSiteFrame = multiply((this->ori.rotation.transposed()),coordPpaWorkSiteFrame) + this->ori.sommetPdV;
 
     this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
+    std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
+    this->vectVisee.normalize();
+    std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
+
 
 }
 
@@ -71,17 +75,8 @@ CCVector2 cc3D2DImage::formuleImg(ccPoint point)
 
     // R*(pt - SPdV)
     tmp = point.coord - this->ori.sommetPdV;
-    std::cout<<"pt - S"<<std::endl;
-    std::cout<<tmp.x<<std::endl;
-    std::cout<<tmp.y<<std::endl;
-    std::cout<<tmp.z<<std::endl;
 
     tmp = multiply(this->ori.rotation.transposed(), tmp);
-
-    std::cout <<"R*(pt-SPdV)"<<std::endl;
-    std::cout<<tmp.x<<std::endl;
-    std::cout<<tmp.y<<std::endl;
-    std::cout<<tmp.z<<std::endl;
 
     //PI
     coordRepIm.x = tmp.x/tmp.z;

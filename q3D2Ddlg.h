@@ -48,7 +48,7 @@ protected slots:
     virtual void onItemPicked(const ccPickingListener::PickedItem& pi);
 
     //picked point callback (called by the above function)
-    void pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P);
+    void pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, const CCVector3& P, CCVector3 N);
 
 };
 
