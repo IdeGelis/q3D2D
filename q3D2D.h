@@ -21,10 +21,7 @@
 //qCC
 #include "../ccStdPluginInterface.h"
 
-//! Dummy qCC plugin
-/** Replace the 'qDummyPlugin' string by your own plugin class name
-	and then check 'qDummyPlugin.cpp' for more directions (you
-	have to fill-in the blank methods. The most important one is the
+/** The most important one is the
 	'getActions' method.  This method should return all actions
 	(QAction objects). CloudCompare will automatically add them to an
 	icon in the plugin toolbar and to an entry in the plugin menu
@@ -49,7 +46,7 @@ public:
 
 	//inherited from ccPluginInterface
         virtual QString getName() const override { return "q3D2D"; }
-        virtual QString getDescription() const override { return "My plugin (add description here)"; }
+        virtual QString getDescription() const override { return "Reprojection 3D to 2D"; }
 	virtual QIcon getIcon() const override;
 
 	//inherited from ccStdPluginInterface

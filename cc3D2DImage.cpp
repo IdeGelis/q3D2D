@@ -59,9 +59,9 @@ void cc3D2DImage::setVectVisee()
     coordPpaWorkSiteFrame = multiply((this->ori.rotation.transposed()),coordPpaWorkSiteFrame) + this->ori.sommetPdV;
 
     this->vectVisee = this->ori.sommetPdV - coordPpaWorkSiteFrame;
-    std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
+    //std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
     this->vectVisee.normalize();
-    std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
+    //std::cout<<this->vectVisee.x<<" "<<this->vectVisee.y<<" "<<this->vectVisee.z<<std::endl;
 
 
 }

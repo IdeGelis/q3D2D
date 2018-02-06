@@ -55,8 +55,6 @@ q3D2DDlg::q3D2DDlg(QWidget *parent) :
     this->currentWorkSite = new ccWorkSite();
 
     this->currentPoint = new ccPoint();
-    ui->push_slctPt->setEnabled(true);
-
 
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
@@ -99,11 +97,9 @@ void q3D2DDlg::load()
 void q3D2DDlg::selectPt()
 {
     std::cout<<"Selecting mode"<<std::endl;
-    //http://www.cloudcompare.org/forum/viewtopic.php?t=514
-    //std::cout<<typeid(this->app).name()<<std::endl;
-    this->m_pickingHub = this->m_app->pickingHub();
 
-    //m_pickingHub->togglePickingMode(true);
+    //Set to picking Mode
+    this->m_pickingHub = this->m_app->pickingHub();
     this->m_pickingHub->addListener(this,true,true);
 
 }
@@ -112,13 +108,15 @@ void q3D2DDlg::selectPt()
 void q3D2DDlg::onItemPicked(const ccPickingListener::PickedItem& pi)
 {
     CCVector3 normal = CCVector3(0,0,0);
-    if (pi.entity->isKindOf(CC_TYPES::POINT_CLOUD))
-    {
+    if (pi.entity->isKindOf(CC_TYPES::POINT_CLOUD)){
         //get point cloud
         ccPointCloud* cloud = static_cast<ccPointCloud*>(pi.entity); //cast to point cloud
 
-        normal = cloud->getPointNormal(pi.itemIndex);
-
+        // Ceck if the point clouds has normal
+        if (cloud->hasNormals()){
+            //Get the normal
+            normal = cloud->getPointNormal(pi.itemIndex);
+        }
     }
 
     pointPicked(pi.entity, pi.itemIndex, pi.clickPoint.x(), pi.clickPoint.y(), pi.P3D, normal); //map straight to pointPicked function
@@ -153,64 +151,27 @@ void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, co
 void q3D2DDlg::reproj()
 {
     //std::cout<<"Reprojection..."<<std::endl;
+    //Si on n'est pas en mode reprojection automatique il faut désactiver le mode sélection de point
+    if(ui->checkBox_autoReproj->checkState() != Qt::Checked){
+        //Set picking mode off
+        this->m_pickingHub->removeListener(this);
+    }
 
-    //this->m_pickingHub->removeListener(this);
     std::vector<cc3D2DImage> images;
     images= this->currentWorkSite->images;
 
     std::vector<cc3D2DImage> selectedImgs;
     bool test = false;
     ui->listImg->clear();
-//    std::cout<<"Distorsion coefs"<<std::endl;
-//    std::cout<<images.at(0).calib.distorsionCoefs.x<<std::endl;
-//    std::cout<<images.at(0).calib.distorsionCoefs.y<<std::endl;
-//    std::cout<<images.at(0).calib.distorsionCoefs.z<<std::endl;
-
-//    std::cout<<"PPS"<<std::endl;
-//    std::cout<<images.at(1).calib.pps.x<<std::endl;
-//    std::cout<<images.at(1).calib.pps.y<<std::endl;
-
-//    std::cout<<"Focale"<<std::endl;
-//    std::cout<<images.at(2).calib.focale<<std::endl;
-
-//    ccPoint ptTest;
-//    CCVector3 coord;
-//    coord.x = 7.16786;
-//    coord.y = 2.85712;
-//    coord.z = -21.829;
-//    ptTest.coord = coord;
-
-
 
     for (int im = 0; im < images.size(); im++){
-        std::cout<<"\n"<<std::endl;
-        std::cout<<images.at(im).name.toStdString()<<std::endl;
+        //std::cout<<images.at(im).name.toStdString()<<std::endl;
 
-//        std::cout<<"Rotation"<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(0,0)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(0,1)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(0,2)<<std::endl;
+        //std::cout<<acos(images.at(im).vectVisee.dot(this->currentPoint->normal))<<std::endl;
 
-//        std::cout<<images.at(im).ori.rotation.getValue(1,0)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(1,1)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(1,2)<<std::endl;
-
-//        std::cout<<images.at(im).ori.rotation.getValue(2,0)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(2,1)<<std::endl;
-//        std::cout<<images.at(im).ori.rotation.getValue(2,2)<<std::endl;
-
-//        std::cout<<"Sommet de prive de vue:"<<std::endl;
-//        std::cout<<images.at(im).ori.sommetPdV.x<<std::endl;
-//        std::cout<<images.at(im).ori.sommetPdV.y<<std::endl;
-//        std::cout<<images.at(im).ori.sommetPdV.z<<std::endl;
-        //std::cout<<images.at(im).vectVisee.x<<" "<<images.at(im).vectVisee.y<<" "<<images.at(im).vectVisee.z<<std::endl;
-        std::cout<<acos(images.at(im).vectVisee.dot(this->currentPoint->normal))<<std::endl;
-        //std::cout<<images.at(im).vectVisee.norm()<<std::endl;
-        //std::cout<<images.at(im).vectVisee.dot(this->currentPoint->normal)/images.at(im).vectVisee.norm()<<std::endl;
-
-
-
-        if (acos(images.at(im).vectVisee.dot(this->currentPoint->normal))>M_PI/2){
+        //Test des parties cachées
+        //si le nuage n'a pas de normal alors le produit scalaire avec un vecteur nul done un angle de PI/2 donc toutes les images passent ce test
+        if (acos(images.at(im).vectVisee.dot(this->currentPoint->normal))>=M_PI/2){
             CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
             CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
 
@@ -219,7 +180,7 @@ void q3D2DDlg::reproj()
             if (0 <= coordImgDisto.x && coordImgDisto.x<= images.at(im).calib.szIm.x){
                 if ( 0 <= coordImgDisto.y && coordImgDisto.y<= images.at(im).calib.szIm.y){
                     selectedImgs.push_back(images.at(im));
-                    std::cout<<"Img seleted"<<std::endl;
+                    //std::cout<<"Img seleted"<<std::endl;
                     QListWidgetItem *imgItem = new QListWidgetItem;
                     imgItem->setText(images.at(im).name);
                     ui->listImg->addItem(imgItem);

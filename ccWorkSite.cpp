@@ -60,7 +60,7 @@ void ccWorkSite::initialise(QString _pathFolderImg, QString _pathFolderOriCali)
 
     // Cross all the orientation folder to create cc3D2DImage object for each image having an orientation file
     for (int i = 0; i < oriFiles.size(); ++i){
-        std::cout<<oriFiles.at(i).toStdString()<<std::endl;
+        //std::cout<<oriFiles.at(i).toStdString()<<std::endl;
 
         //Image's name is contained in the orientation file's name
         // Orientation file name : "Orientation-IMAGENAME.xml"

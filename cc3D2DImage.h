@@ -19,16 +19,12 @@
 #include "ccPoint.h"
 
 
-class cc3D2DImage : public QPixmap //, public QListWidgetItem
+class cc3D2DImage : public QPixmap
 {
 public:
     cc3D2DImage(QString _path, QString _name, ccOrientation _ori, ccCalibration _cali);
 
     void setVectVisee();
-//    Vector2Tpl<float> addDisto(Vector2Tpl<float>);
-//    Vector2Tpl<float> formuleImg(Vecto2Tpl<float>);
-
-//public:
     QString name;
     ccCalibration calib;
     ccOrientation ori;
