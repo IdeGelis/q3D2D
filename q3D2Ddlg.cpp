@@ -137,6 +137,7 @@ void q3D2DDlg::pointPicked(ccHObject* entity, unsigned itemIdx, int x, int y, co
 
     this->currentPoint->coord = P;
     this->currentPoint->normal = N;
+    this->currentPoint->normal.normalize();
 
     ui->push_reproj->setEnabled(true);
 
@@ -164,14 +165,20 @@ void q3D2DDlg::reproj()
     bool test = false;
     ui->listImg->clear();
 
+    //List containing all the agles between normal et shooting vector
+    //It will be used if the case show the best image is checked
+    std::vector<double> angles;
+
     for (int im = 0; im < images.size(); im++){
-        //std::cout<<images.at(im).name.toStdString()<<std::endl;
+        std::cout<<images.at(im).name.toStdString()<<std::endl;
 
-        //std::cout<<acos(images.at(im).vectVisee.dot(this->currentPoint->normal))<<std::endl;
-
-        //Test des parties cachées
+        //Test for hidden parts
         //si le nuage n'a pas de normal alors le produit scalaire avec un vecteur nul done un angle de PI/2 donc toutes les images passent ce test
-        if (acos(images.at(im).vectVisee.dot(this->currentPoint->normal))>=M_PI/2){
+        double angleNormVecVis = acos(images.at(im).vectVisee.dot(this->currentPoint->normal));
+        angles.push_back(angleNormVecVis);
+        std::cout<<angleNormVecVis<<std::endl;
+
+        if (angleNormVecVis>=M_PI/2){
             CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
             CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
 
@@ -193,6 +200,17 @@ void q3D2DDlg::reproj()
     if (test){
         ui->push_display->setEnabled(true);
         this->currentWorkSite->selectedImgs = selectedImgs;
+    }
+
+    if (ui->checkBox_BestImg->checkState() == Qt::Checked){
+        //Get the range of the maximum angle between the normal of the point and the shooting vector
+        int rangeMaxElt = std::distance(angles.begin(),std::max_element(angles.begin(),angles.end()));
+
+        //std::cout<<std::max_element(angles.begin(),angles.end())<<std::endl;
+        q3D2DDisplayImgDlg* dlgDispImg = new q3D2DDisplayImgDlg();
+        dlgDispImg->dispImg(images.at(rangeMaxElt));
+        dlgDispImg->show();
+
     }
 }
 
