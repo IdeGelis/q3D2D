@@ -46,19 +46,19 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0" colspan="4">
+      <widget class="QGraphicsView" name="graphicsView">
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QCheckBox" name="checkBox_marker">
        <property name="text">
         <string>Indiquer le pixel</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="4">
-      <widget class="QGraphicsView" name="graphicsView">
-       <property name="mouseTracking">
         <bool>true</bool>
        </property>
       </widget>

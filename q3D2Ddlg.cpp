@@ -75,13 +75,13 @@ void q3D2DDlg::load()
     std::cout<<"Loading folders containning images and files of parameters..."<<std::endl;
 
     //QDir::homePath() : In order to be able work on several computer and several environment
-    QString dirImgStr = QFileDialog::getExistingDirectory(this, tr("Select Images Directory"),
+    QString dirImgStr = QFileDialog::getExistingDirectory(this, tr("Sélectionner le dossier contenant les images"),
                                                                QDir::homePath(),
                                                                QFileDialog::ShowDirsOnly
                                                                | QFileDialog::DontResolveSymlinks);
 
     // Parameters folder is usually the same as images folder
-    QString dirParamStr = QFileDialog::getExistingDirectory(this, tr("Select the folder containing parameters files"),
+    QString dirParamStr = QFileDialog::getExistingDirectory(this, tr("Sélectionner le dossier contenant les fichiers XML d'orientation"),
                                                          QDir(dirImgStr).absolutePath(),
                                                          QFileDialog::ShowDirsOnly
                                                          | QFileDialog::DontResolveSymlinks);

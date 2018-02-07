@@ -22,7 +22,7 @@ q3D2DDisplayImgDlg::q3D2DDisplayImgDlg(QWidget *parent) :
     ui->graphicsView->setScene(&mScene);
     QObject::connect(ui->zoom_in,SIGNAL(released()),this,SLOT(zoom_in()));
     QObject::connect(ui->zoom_out,SIGNAL(released()),this,SLOT(zoom_out()));
-    QObject::connect(ui->checkBox_marker,SIGNAL(stateChanged()),this,SLOT(markerOff(img)));
+    //QObject::connect(ui->checkBox_marker,SIGNAL(stateChanged()),this,SLOT(markerOff(img)));
 }
 
 q3D2DDisplayImgDlg::~q3D2DDisplayImgDlg()
@@ -52,10 +52,10 @@ void q3D2DDisplayImgDlg::dispImg(cc3D2DImage img)
 
 
 }
-void q3D2DDisplayImgDlg::markerOff(cc3D2DImage img)
-{
-    std::cout<<"hey!!"<<std::endl;
-}
+//void q3D2DDisplayImgDlg::markerOff(cc3D2DImage img)
+//{
+//    std::cout<<"hey!!"<<std::endl;
+//}
 
 #ifndef QT_NO_WHEELEVENT
 
