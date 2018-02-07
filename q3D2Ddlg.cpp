@@ -56,6 +56,8 @@ q3D2DDlg::q3D2DDlg(QWidget *parent) :
 
     this->currentPoint = new ccPoint();
 
+    ui->checkBox_hiddenPart->setChecked(true);
+
     //Connexion of butons
     QObject::connect(ui->push_load,SIGNAL(released()),this,SLOT(load()));
     QObject::connect(ui->push_slctPt,SIGNAL(released()),this,SLOT(selectPt()));
@@ -165,6 +167,14 @@ void q3D2DDlg::reproj()
     bool test = false;
     ui->listImg->clear();
 
+    //Boolean to know if the user wants to reproject whith (true) or without the hidden parts gestion
+    bool hiddenPart;
+    if (ui->checkBox_hiddenPart->checkState() == Qt::Checked){
+        hiddenPart = true;
+    }else{
+        hiddenPart = false;
+    }
+
     //List containing all the agles between normal et shooting vector
     //It will be used if the case show the best image is checked
     std::vector<double> angles;
@@ -178,7 +188,7 @@ void q3D2DDlg::reproj()
         angles.push_back(angleNormVecVis);
         std::cout<<angleNormVecVis<<std::endl;
 
-        if (angleNormVecVis>=M_PI/2){
+        if (angleNormVecVis>=M_PI/2 || !hiddenPart){
             CCVector2 coordImg = images.at(im).formuleImg(*this->currentPoint);
             CCVector2 coordImgDisto = images.at(im).addDisto(coordImg);
 

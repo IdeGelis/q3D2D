@@ -98,16 +98,6 @@ CCVector2 cc3D2DImage::addDisto(CCVector2 coordIm)
     //d2 = squarred distance
     double d2 = std::pow(coordIm.x-this->calib.pps.x,2) + std::pow(coordIm.y-this->calib.pps.y,2);
 
-//    std::cout<<"Distance au carré"<<std::endl;
-//    std::cout<<d2<<std::endl;
-
-//    //fact = 1 + R1*d2 + R2*d2**2 + R3*d2**3
-//    double fact = 1 + this->calib.distorsionCoefs.x*d2 + this->calib.distorsionCoefs.y*std::pow(d2,2) + this->calib.distorsionCoefs.z*std::pow(d2,3);
-
-//    // //!\\  double * CCVector does not exist!! Do CCVector * double
-//    coordImDisto = this->calib.pps + (coordIm - this->calib.pps)*fact;
-
-
     //METHODE ANTOINE
     double fact = this->calib.distorsionCoefs.x*d2 + this->calib.distorsionCoefs.y*(std::pow(d2,2)) + this->calib.distorsionCoefs.z*(std::pow(d2,3));
 

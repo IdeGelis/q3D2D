@@ -84,22 +84,19 @@ void q3D2D::doAction()
 
 	/*** HERE STARTS THE ACTION ***/
     std::cout<<"Initialisation of q3D2D Plugin"<<std::endl;
-    //show dialog to let the user choose the operation to perform
-    //q3D2DDlg dlg(m_app->getMainWindow());
+
+
 
     ccGLWindow* win = m_app->getActiveGLWindow();
     m_app->dispToConsole("[q3D2D] Ouverture de q3D2D!",ccMainAppInterface::STD_CONSOLE_MESSAGE);
 
     if (win){
+        //show dialog to let the user choose the operation to perform
         q3D2DDlg* dlg = new q3D2DDlg();
         dlg->win = win;
         dlg->m_app = m_app;
         dlg->show();
     }
-
-
-
-
 
 
 	//This is how you can output messages

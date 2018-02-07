@@ -149,6 +149,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBox_hiddenPart">
+     <property name="text">
+      <string>Gérer les parties cachées</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Liste des images voyant le point:</string>
